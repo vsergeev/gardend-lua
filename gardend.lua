@@ -31,19 +31,19 @@ end
 function loadblocks(configuration)
     local blkobjects = {}
 
-    for _,blktype in ipairs({"inputs", "algorithms", "outputs", "posts"}) do
+    for _, blktype in ipairs({"inputs", "algorithms", "outputs", "posts"}) do
         if configuration[blktype] == nil then
             error("Invalid configuration: missing '" .. blktype .. "' subtable.")
         end
 
-        for blkinstance,blkconfig in pairs(configuration[blktype]) do
+        for blkinstance, blkconfig in pairs(configuration[blktype]) do
             if blkconfig.driver == nil then
                 error("Invalid configuration: instance '" .. blkinstance .. "' missing 'driver' in configuration")
             end
 
             path = blktype .. "." .. blkconfig.driver
             print("Loading " .. blktype .. " block '" .. blkinstance .. "' (" .. path .. ")")
-            blkobject = {instance = blkinstance, type = blktype, path = path, configuration = blkconfig, object = require(path)(config)}
+            blkobject = {instance = blkinstance, type = blktype, path = path, object = require(path)(config)}
 
             blkobjects[#blkobjects+1] = blkobject
         end
