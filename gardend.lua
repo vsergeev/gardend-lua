@@ -1,5 +1,3 @@
-local config = require('config')
-local blocks = require('blocks')
 local state = require('state')
 local periphery = require('periphery')
 
@@ -10,14 +8,51 @@ if #arg < 1 then
 end
 
 -- Load configuration
-local ok, gardenConfig = pcall(config.load, arg[1])
+function loadconfig(path)
+    local f = assert(io.open(path, 'r'))
+    local t = f:read('*all')
+    f:close()
+    local env = {}
+    load(t, nil, 't', env)()
+
+    if env.configuration == nil then
+        error("Invalid configuration: 'configuration' table missing.")
+    end
+    return env.configuration
+end
+
+local ok, gardenConfig = pcall(loadconfig, arg[1])
 if not ok then
     io.stderr:write(gardenConfig .. "\n")
     os.exit(-1)
 end
 
 -- Load blocks
-local ok, gardenBlocks = pcall(blocks.load, gardenConfig)
+function loadblocks(configuration)
+    local blkobjects = {}
+
+    for _,blktype in ipairs({"inputs", "algorithms", "outputs", "posts"}) do
+        if configuration[blktype] == nil then
+            error("Invalid configuration: missing '" .. blktype .. "' subtable.")
+        end
+
+        for blkinstance,blkconfig in pairs(configuration[blktype]) do
+            if blkconfig.driver == nil then
+                error("Invalid configuration: instance '" .. blkinstance .. "' missing 'driver' in configuration")
+            end
+
+            path = blktype .. "." .. blkconfig.driver
+            print("Loading " .. blktype .. " block '" .. blkinstance .. "' (" .. path .. ")")
+            blkobject = {instance = blkinstance, type = blktype, path = path, configuration = blkconfig, object = require(path)(config)}
+
+            blkobjects[#blkobjects+1] = blkobject
+        end
+    end
+
+    return blkobjects
+end
+
+local ok, gardenBlocks = pcall(loadblocks, gardenConfig)
 if not ok then
     io.stderr:write(gardenBlocks .. "\n")
     os.exit(-1)
