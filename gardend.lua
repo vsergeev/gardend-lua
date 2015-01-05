@@ -71,7 +71,8 @@ while true do
     end
 
     print(string.format("[%s] Recording state...", os.date("%c")))
-    print(tostring(gardenState))
+    s, _ = ("\t" .. tostring(gardenState)):gsub("\n", "\n\t")
+    print(s)
     gardenState:record()
 
     periphery.sleep_ms(gardenConfig.timestep*1000)
