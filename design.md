@@ -88,7 +88,7 @@ configuration = {
             -- Block name
             block = <block name>,
             -- State variables configuration
-            variables = { <state variable name>, ... },
+            variables = {<state variable name>, ...},
             -- Block-specific configuration
             ...
         },
@@ -116,38 +116,38 @@ configuration = {
     inputs = {
         ambient_temperature_sensor = {
             -- Block name
-            block = 'tmp102',
+            block = "tmp102",
             -- State configuration
-            variables = { 'ambient_temperature' },
+            variables = {"ambient_temperature"},
             -- Block-specific configuration
-            i2c_devpath = '/dev/i2c-0',
+            i2c_devpath = "/dev/i2c-0",
             i2c_address = 0x20,
         },
         tray_temperature_and_humidity_sensor = {
             -- Block name
-            block = 'htu21d',
+            block = "htu21d",
             -- State configuration
-            variables = { 'tray_temperature', 'tray_humidity' },
+            variables = {"tray_temperature", "tray_humidity"},
             -- Block-specific configuration
-            i2c_devpath = '/dev/i2c-0',
+            i2c_devpath = "/dev/i2c-0",
             i2c_address = 0x21,
         },
     },
     algorithms = {
         growlight_controller = {
             -- Block name
-            block = 'timer',
+            block = "timer",
             -- State configuration
-            variables = { 'growlight_state' },
+            variables = {"growlight_state"},
             -- Block-specific configuration
-            time_on = '6:00am',
-            time_off = '8:00pm',
+            time_on = "6:00am",
+            time_off = "8:00pm",
         },
         heatmat_controller = {
             -- Block name
-            block = 'heatmat',
+            block = "heatmat",
             -- State configuration
-            variables = { 'tray_temperature', 'heatmat_state' },
+            variables = {"tray_temperature", "heatmat_state"},
             -- Block-specific configuration
             temperature_target = 80.0,
             temperature_window = 5.0,
@@ -156,17 +156,17 @@ configuration = {
     outputs = {
         growlight_switch = {
             -- Block name
-            block = 'gpioswitch',
+            block = "gpioswitch",
             -- State configuration
-            variables = { 'growlight_state' },
+            variables = {"growlight_state"},
             -- Block-specific configuration
             gpio_number = 123,
         },
         heatmat_switch = {
             -- Block name
-            block = 'gpioswitch',
+            block = "gpioswitch",
             -- State configuration
-            variables = { 'heatmat_state' },
+            variables = {"heatmat_state"},
             -- Block-specific configuration
             gpio_number = 125,
         },
@@ -174,7 +174,7 @@ configuration = {
     posts = {
         console = {
             -- Block name
-            block = 'consolestats',
+            block = "consolestats",
             -- Block-specific configuration
         },
     },
@@ -188,7 +188,7 @@ Processing blocks are code files named by their block name and live in `inputs/`
 For example, input processing block `foo` would live in `inputs/foo.lua`, and can be instantiated and configured with:
 
 ``` lua
-local foo = require('inputs.foo')
+local foo = require("inputs.foo")
 foo_instance = foo(foo_configuration)
 ```
 
