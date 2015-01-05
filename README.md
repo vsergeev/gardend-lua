@@ -8,8 +8,12 @@
 * `algorithms/`: Algorithm processing blocks
 * `outputs/`: Output processing blocks
 * `posts/`: Post processing blocks
-* `confs/`: Daemon configurations
-* `state.lua`: system state management code
+* `tests/`: Unit tests
+* `configs/`: Daemon configurations
+* `state.lua`: state management
+* `blocks.lua`: block loading
+* `config.lua`: configuration loading
 * `gardend.lua`: garden daemon
 * `design.md`: design document
+* `README.md`: this README
 
