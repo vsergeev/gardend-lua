@@ -4,10 +4,10 @@
 
 ## File Structure
 
-* `inputs/`: Input processing blocks
-* `controllers/`: Controller processing blocks
-* `outputs/`: Output processing blocks
-* `posts/`: Post processing blocks
+* `inputs/`: Input blocks
+* `controllers/`: Controller blocks
+* `outputs/`: Output blocks
+* `postprocessors/`: Post-processing blocks
 * `tests/`: Unit tests
 * `configs/`: Daemon configurations
 * `state.lua`: state management

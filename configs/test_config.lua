@@ -8,5 +8,5 @@ configuration = {
     },
     controllers = {},
     outputs = {},
-    posts = {},
+    postprocessors = {},
 }
