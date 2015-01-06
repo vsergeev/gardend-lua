@@ -85,8 +85,8 @@ configuration = {
     timestep = <time step in seconds>
     inputs = {
         <instance name> = {
-            -- Block name
-            block = <block name>,
+            -- Driver name
+            driver = <driver name>,
             -- State variables configuration
             variables = {<state variable name>, ...},
             -- Block-specific configuration
@@ -106,7 +106,7 @@ configuration = {
 }
 ```
 
-The `block` string specifies the block filename to load. The `variables` array specifies which state variables the block may use, in a block-specific order. The variable names referenced in the `variables` table must be unique names.
+The `driver` string specifies the driver filename to load. The `variables` array specifies which state variables the block may populate or access in a driver-specific order. The variable names referenced in the `variables` table must be unique names.
 
 Example:
 
@@ -115,8 +115,8 @@ configuration = {
     timestep = 60.0,
     inputs = {
         ambient_temperature_sensor = {
-            -- Block name
-            block = "tmp102",
+            -- Driver name
+            driver = "tmp102",
             -- State configuration
             variables = {"ambient_temperature"},
             -- Block-specific configuration
@@ -124,8 +124,8 @@ configuration = {
             i2c_address = 0x20,
         },
         tray_temperature_and_humidity_sensor = {
-            -- Block name
-            block = "htu21d",
+            -- Driver name
+            driver = "htu21d",
             -- State configuration
             variables = {"tray_temperature", "tray_humidity"},
             -- Block-specific configuration
@@ -135,8 +135,8 @@ configuration = {
     },
     controllers = {
         growlight = {
-            -- Block name
-            block = "timer",
+            -- Driver name
+            driver = "timer",
             -- State configuration
             variables = {"growlight_state"},
             -- Block-specific configuration
@@ -144,8 +144,8 @@ configuration = {
             time_off = "8:00pm",
         },
         heatmat = {
-            -- Block name
-            block = "heatmat",
+            -- Driver name
+            driver = "heatmat",
             -- State configuration
             variables = {"tray_temperature", "heatmat_state"},
             -- Block-specific configuration
@@ -155,16 +155,16 @@ configuration = {
     },
     outputs = {
         growlight_switch = {
-            -- Block name
-            block = "gpioswitch",
+            -- Driver name
+            driver = "gpioswitch",
             -- State configuration
             variables = {"growlight_state"},
             -- Block-specific configuration
             gpio_number = 123,
         },
         heatmat_switch = {
-            -- Block name
-            block = "gpioswitch",
+            -- Driver name
+            driver = "gpioswitch",
             -- State configuration
             variables = {"heatmat_state"},
             -- Block-specific configuration
@@ -173,8 +173,8 @@ configuration = {
     },
     posts = {
         console = {
-            -- Block name
-            block = "consolestats",
+            -- Driver name
+            driver = "consolestats",
             -- Block-specific configuration
         },
     },
@@ -183,7 +183,7 @@ configuration = {
 
 ## Processing Blocks
 
-Processing blocks are code files named by their block name and live in `inputs/`, `controllers/`, `outputs/`, `posts/` folders. The imported block module should be a callable constructor for the block that takes a configuration table as its first argument and returns an instance of that block.
+Processing blocks are code files named by their driver name and live in `inputs/`, `controllers/`, `outputs/`, `posts/` folders. The imported block module should be a callable constructor for the block that takes a configuration table as its first argument and returns an instance of that block.
 
 For example, input processing block `foo` would live in `inputs/foo.lua`, and can be instantiated and configured with:
 
