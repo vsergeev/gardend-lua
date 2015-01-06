@@ -6,7 +6,7 @@ configuration = {
             abc = 'def',
         },
     },
-    algorithms = {},
+    controllers = {},
     outputs = {},
     posts = {},
 }

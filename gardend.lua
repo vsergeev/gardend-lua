@@ -31,7 +31,7 @@ end
 function loadblocks(configuration)
     local blkobjects = {}
 
-    for _, blktype in ipairs({"inputs", "algorithms", "outputs", "posts"}) do
+    for _, blktype in ipairs({"inputs", "controllers", "outputs", "posts"}) do
         if configuration[blktype] == nil then
             error("Invalid configuration: missing '" .. blktype .. "' subtable.")
         end

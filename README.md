@@ -5,7 +5,7 @@
 ## File Structure
 
 * `inputs/`: Input processing blocks
-* `algorithms/`: Algorithm processing blocks
+* `controllers/`: Controller processing blocks
 * `outputs/`: Output processing blocks
 * `posts/`: Post processing blocks
 * `tests/`: Unit tests
