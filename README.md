@@ -41,3 +41,7 @@ $ lua gardend.lua configs/propagation_config.lua
 
 Feel free to report any issues, bug reports, or suggestions at [github](https://github.com/vsergeev/gardend/issues) or by email at vsergeev at gmail.
 
+## License
+
+gardend is MIT licensed. See the provided LICENSE file.
+
