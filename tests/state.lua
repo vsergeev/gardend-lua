@@ -41,6 +41,8 @@ describe("basic history usage", function ()
     assert.are.same({timestamp = 7, foo = 789, bar = "coffee"}, s[-1])
     assert.are.same({timestamp = 6, foo = 456, bar = "bananas"}, s[-2])
     assert.are.same({timestamp = 5, foo = 123, bar = "hello world"}, s[-3])
+    assert.are.same(nil, s[-4])
+    assert.are.same(nil, s[-5])
 end)
 
 describe("errors", function ()
