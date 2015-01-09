@@ -82,7 +82,8 @@ Configuration format:
 
 ``` lua
 configuration = {
-    timestep = <time step in seconds>
+    timestep = <time step in seconds>,
+    logfile = <logfile path>,
     inputs = {
         <instance name> = {
             -- Driver name
@@ -113,6 +114,7 @@ Example:
 ``` lua
 configuration = {
     timestep = 60.0,
+    logfile = "/var/log/gardend.log",
     inputs = {
         ambient_temperature_sensor = {
             -- Driver name

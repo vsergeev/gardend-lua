@@ -1,3 +1,4 @@
+dump = require('pl.pretty').dump
 local state = require('state')
 local periphery = require('periphery')
 
@@ -8,7 +9,7 @@ if #arg < 1 then
 end
 
 -- Load configuration
-function loadconfig(path)
+local function loadconfig(path)
     local f = assert(io.open(path, 'r'))
     local t = f:read('*all')
     f:close()
@@ -27,8 +28,20 @@ if not ok then
     os.exit(-1)
 end
 
+-- Open Log file
+if gardenConfig.logfile == nil then
+    logfile = io.stdout
+else
+    logfile = io.open(gardenConfig.logfile, "a")
+end
+
+function log(fmt, ...)
+    logfile:write(os.date("[%c] ") .. string.format(fmt, unpack({...})) .. "\n")
+    logfile:flush()
+end
+
 -- Load blocks
-function loadblocks(configuration)
+local function loadblocks(configuration)
     local blkobjects = {}
 
     for _, blktype in ipairs({"inputs", "controllers", "outputs", "postprocessors"}) do
@@ -42,7 +55,7 @@ function loadblocks(configuration)
             end
 
             path = blktype .. "." .. blkconfig.driver
-            print("Loading " .. blktype .. " block '" .. blkinstance .. "' (" .. path .. ")")
+            log("Loading %s block '%s' (%s)", blktype, blkinstance, path)
             blkobject = {instance = blkinstance, type = blktype, path = path, object = require(path)(config)}
 
             blkobjects[#blkobjects+1] = blkobject
@@ -66,13 +79,13 @@ while true do
     gardenState:timestamp()
 
     for _, block in ipairs(gardenBlocks) do
-        print(string.format("[%s] Processing %s block instance '%s' (%s)", os.date("%c"), block.type, block.instance, block.path))
+        log("Processing %s block instance '%s' (%s)", block.type, block.instance, block.path)
         block.object:process(gardenState)
     end
 
-    print(string.format("[%s] Recording state...", os.date("%c")))
+    log("Recording state...")
     s, _ = ("\t" .. tostring(gardenState)):gsub("\n", "\n\t")
-    print(s)
+    log(s)
     gardenState:record()
 
     periphery.sleep_ms(gardenConfig.timestep*1000)
