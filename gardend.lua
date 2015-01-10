@@ -1,4 +1,3 @@
-dump = require('pl.pretty').dump
 local state = require('state')
 local periphery = require('periphery')
 
