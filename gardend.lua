@@ -71,7 +71,7 @@ if not ok then
 end
 
 -- Create state structure
-local gardenState = state.new()
+local gardenState = state.new(gardenConfig.dbfile)
 
 -- Run system loop
 while true do
