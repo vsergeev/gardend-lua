@@ -2,40 +2,42 @@
 
 ## Basic Operation
 
-`gardend` is a discrete-time control daemon with a lightweight framework for managing system state and implementing processing blocks. System state is maintained in a flat associative array, mapping unique variable names to values for inputs, intermediate computations, and outputs, which can be populated by and accessed from different processing blocks. All state is maintained in this structure and it is stored persistently so that the daemon may recover from a crash or reboot to resume system control with past state left in-tact. The processing blocks are comprised of drivers, controllers, and post-processing routines to read sensors, compute output states, drive outputs, compute statitistics and generate visualizations.
+`gardend` is a discrete-time control daemon with a lightweight framework for managing system state and implementing processing blocks. System state is maintained in a flat associative array, mapping variable names to values that may be inputs, intermediate computations, or outputs. Processing blocks are drivers, controllers, and post-processing routines that read sensors, compute output states, drive outputs, compute statistics or generate visualizations, respsectively, and may access or populate variables in the system state. All system state is maintained in one time-indexed structure that is stored persistently, so that the daemon may recover from a crash or reboot to resume system control with past state left in-tact.
 
-The main job of the daemon is four stages of processing on every time step: `inputs`, `controllers`, `outputs`, and `postprocessors`. The `inputs` stage runs all input processing blocks to introduce input variables into the system state for the current time step, from hardware sensors or other data sources. The `controllers` stage runs all controller processing blocks to produce output variables from current and past system state. The `outputs` stage runs all output processing blocks to apply output variables to hardware or other external agents. Finally, the `postprocessors` stage runs all post-processing blocks to carry out arbitrary post-processing of the current and past states, such as updating visualizations or statistics. The four categories of processing stages ensure that all input and output dependencies between processing blocks are accounted for during their construction.
+The main job of the daemon is executing processing blocks in four stages on every time step: `inputs`, `controllers`, `outputs`, and `postprocessors`. The `inputs` stage runs all input processing blocks to introduce input variables into the system state for the current time step, from hardware sensors or other data sources. The `controllers` stage runs all controller processing blocks to produce output variables from current and past system state variables. The `outputs` stage runs all output processing blocks to apply output variables to hardware or other external agents. Finally, the `postprocessors` stage runs all post-processing blocks to carry out arbitrary post-processing of the current and past system state variables, such as updating visualizations or statistics. The four categories of processing stages ensure that all input and output dependencies between processing blocks are accounted for during their construction.
 
-The daemon runs in a single thread and assumes the time step is relatively slow (e.g. 1 minute) compared to the execution time of the processing blocks. For the time being, the daemon executes every processing block on each time step.
+The daemon runs in a single thread and assumes the time step is relatively long (e.g. 1 minute) compared to the execution time of the processing blocks. The daemon executes every processing block on each time step.
 
 Daemon main loop pseudocode:
 
 ```
 while true do
-    state:initialize()
+    state:timestamp()
 
     for _, block in ipairs(InputBlocks) do
-        block:process(state)
+        block.object:process(state)
     done
     for _, block in ipairs(ControllerBlocks) do
-        block:process(state)
+        block.object:process(state)
     done
     for _, block in ipairs(OutputBlocks) do
-        block:process(state)
+        block.object:process(state)
     done
     for _, block in ipairs(PostprocessorBlocks) do
-        block:process(state)
+        block.object:process(state)
     done
 
     state:record()
 
-    sleep_until_next_timestep()
+    sleep(timestep)
 end
 ```
 
 ## System State
 
-The system state for a particular time step is stored in a simple table key/value pairs for the timestamp, input data, intermediate computations, and outputs. Input blocks should populate the system state with the key/value pair(s) containing sampled data. Controller blocks should populate the system state with key/value pair(s) containing computed outputs and intermediate computations (if necessary). Output blocks should use the system state to drive outputs. Postprocessor blocks should use system state to generate visualiaztions or statistics. In general, processing blocks should not maintain their own state and should keep all required state in the system state structure.
+The system state for a particular time step is stored in a simple table containing the timestamp, input data, intermediate computations, and outputs. Input blocks should populate variables in the system state with sampled data. Controller blocks should populate variables in the system state with computed outputs and any intermediate computations, if necessary. Output blocks should access variables in the system state to drive outputs. Postprocessor blocks should access variables in the system state to generate visualiaztions or statistics. In general, processing blocks should not maintain their own state and should keep all required state in the system state structure.
+
+System state table example:
 
 ``` lua
 {
@@ -71,6 +73,8 @@ state[-2] ->
         heatmat_state = true,
 }
 
+state{-3] -> nil
+
 state[-500] -> nil
 ```
 
@@ -83,7 +87,8 @@ Configuration format:
 ``` lua
 configuration = {
     timestep = <time step in seconds>,
-    logfile = <logfile path>,
+    dbfile = <database file path>,
+    logfile = <log file path>,
     inputs = {
         <instance name> = {
             -- Driver name
@@ -107,13 +112,14 @@ configuration = {
 }
 ```
 
-The `driver` string specifies the driver filename to load. The `variables` array specifies which state variables the block may populate or access in a driver-specific order. The variable names referenced in the `variables` table must be unique names.
+The `driver` string specifies the driver filename to load. The `variables` array specifies which state variables the block may populate or access in a driver-specific order.
 
-Example:
+Configuration example:
 
 ``` lua
 configuration = {
     timestep = 60.0,
+    dbfile = "gardend.db",
     logfile = "/var/log/gardend.log",
     inputs = {
         ambient_temperature_sensor = {
@@ -185,24 +191,24 @@ configuration = {
 
 ## Processing Blocks
 
-Processing blocks are code files named by their driver name and live in `inputs/`, `controllers/`, `outputs/`, `postprocessors/` folders. The imported block module should be a callable constructor for the block that takes a configuration table as its first argument and returns an instance of that block.
+Processing blocks live in the `inputs/`, `controllers/`, `outputs/`, `postprocessors/` folders and are named by their driver name. An imported processing block should be a callable constructor that takes a configuration table as its first argument and returns an instance of the block. The object is required to implement the `process(state <table>)` method.
 
-For example, input processing block `foo` would live in `inputs/foo.lua`, and can be instantiated and configured with:
+For example, input processing block `foo` would live at `inputs/foo.lua`, and can be instantiated and configured with:
 
 ``` lua
 local foo = require("inputs.foo")
 foo_instance = foo(foo_configuration)
 ```
 
-The configuration structure passed to the block is the corresponding subtable from the configuration structure above.
+The configuration structure passed to the block is a block subtable from the configuration structure above.
 
-All processing blocks objects should provide a `process(state <table>)` method that take the system state as an argument. This method should look up and/or populate keys in the passed in system state table.
+All processing blocks must implement the `process(state <table>)` method, which will be called by gardend on each time step to execute the processing block. The processing block may look up and/or populate keys in the state table.
 
 ``` lua
 foo_instance:process(state)
 ```
 
-## System State Persistence and Recovery
+## System State Persistence
 
-The system states are stored persistently in database. Database is TBD.
+At the end of each time step, the system state is serialized into a JSON object and inserted as a row into the SQLite database specified by the configuration variable `dbfile`. Look-ups into past system state made by processing blocks are made by fetching the row corresponding to the time index to look up and deserializing the JSON object into a system state table. SQLite provides durable storage and efficient random access into past system state and JSON fulfills the need for serializing and deserializing the system state to/from storage.
 
