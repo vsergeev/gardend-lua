@@ -212,3 +212,8 @@ foo_instance:process(state)
 
 At the end of each time step, the system state is serialized into a JSON object and inserted as a row into the SQLite database specified by the configuration variable `dbfile`. Look-ups into past system state made by processing blocks are made by fetching the row corresponding to the time index to look up and deserializing the JSON object into a system state table. SQLite provides durable storage and efficient random access into past system state and JSON fulfills the need for serializing and deserializing the system state to/from storage.
 
+The SQLite database schema is:
+```
+CREATE TABLE GardenState(timestamp INTEGER, state TEXT);
+```
+
