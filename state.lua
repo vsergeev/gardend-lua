@@ -1,10 +1,44 @@
 local json = require('cjson')
+local sqlite3 = require('lsqlite3')
 
 local state = {}
 
-function state.new()
+-- Safe sql_execute() with parameter binding
+local function sql_execute(db, sql, ...)
+    -- Bind values to SQL statement
+    local stmt = db:prepare(sql)
+    stmt:bind_values(...)
+
+    -- Collect results
+    local results = {}
+    for r in stmt:urows() do
+        results[#results+1] = r
+    end
+
+    -- Finalize statement
+    if stmt:finalize() ~= sqlite3.OK then
+        error(string.format("executing statement on database: %s (%d)", db:errmsg(), db:errcode()))
+    end
+
+    return results
+end
+
+function state.new(dbpath)
+    -- Open database handle
+    local db = nil
+    if dbpath == nil then
+        db = sqlite3.open_memory()
+    else
+        db = sqlite3.open(dbpath)
+    end
+
+    -- Create state table if it doesn't exist
+    if db:exec("CREATE TABLE IF NOT EXISTS GardenState(timestamp INTEGER, state TEXT);") ~= sqlite3.OK then
+        error(string.format("creating table in database: %s (%d)", db:errmsg(), db:errcode()))
+    end
+
     -- Create a new state object
-    local self = setmetatable({_data = {}, _history = {}}, state)
+    local self = setmetatable({_data = {}, _db = db}, state)
     return self
 end
 
@@ -14,8 +48,11 @@ local function state_timestamp(self)
 end
 
 local function state_record(self)
-    -- Add the data to our history
-    self._history[#self._history+1] = json.encode(self._data)
+    -- Record the state to the database
+    local ok, results = pcall(sql_execute, self._db, "INSERT INTO GardenState Values(?,?);", tonumber(self._data.timestamp), json.encode(self._data))
+    if not ok then
+        error(string.format("recording state to database: %s", results))
+    end
     -- Clear our data
     self._data = {}
 end
@@ -42,10 +79,13 @@ function state:__index(key)
         end
 
         -- Past
-        if #self._history+key < 0 then
+        local ok, results = pcall(sql_execute, self._db, "SELECT state FROM GardenState WHERE rowid=(SELECT MAX(rowid) FROM GardenState)+?;", tonumber(key)+1)
+        if not ok then
+            error(string.format("querying past state in database: %s", results))
+        elseif #results == 0 then
             return nil
         end
-        local past_state = json.decode(self._history[#self._history+key+1])
+        local past_state = json.decode(results[1])
         return setmetatable({}, {__index = past_state, __newindex = function (t, k, v) error("modifying past state") end})
     end
 
