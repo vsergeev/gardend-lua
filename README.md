@@ -19,10 +19,12 @@
 
 Lua 5.2 or greater
 
-LuaRocks: `lua-periphery` (for I/O and sleep), `busted` (for unit tests)
+LuaRocks: `lua-periphery` (for I/O and sleep), `lua-cjson` (for state serialization), `busted` (for unit tests)
 
 ```
-$ luarocks install lua-periphery busted
+$ sudo luarocks install lua-periphery
+$ sudo luarocks install lua-cjson
+$ sudo luarocks install busted
 ```
 
 ## Running
