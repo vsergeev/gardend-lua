@@ -1,3 +1,5 @@
+local json = require('cjson')
+
 local state = {}
 
 function state.new()
@@ -13,7 +15,7 @@ end
 
 function state_record(self)
     -- Add the data to our history
-    self._history[#self._history+1] = setmetatable({}, {__index = self._data, __newindex = function (t, k, v) error("modifying past state") end})
+    self._history[#self._history+1] = json.encode(self._data)
     -- Clear our data
     self._data = {}
 end
@@ -27,7 +29,7 @@ function state:__tostring()
 end
 
 function state:__index(key)
-    -- Interpret negative index as accesses to past state
+    -- Interpret numeric index as access to past/current state
     if type(key) == "number" then
         -- Future
         if key > 0 then
@@ -40,7 +42,11 @@ function state:__index(key)
         end
 
         -- Past
-        return self._history[#self._history+key+1]
+        if #self._history+key < 0 then
+            return nil
+        end
+        local past_state = json.decode(self._history[#self._history+key+1])
+        return setmetatable({}, {__index = past_state, __newindex = function (t, k, v) error("modifying past state") end})
     end
 
     -- Methods
@@ -50,7 +56,7 @@ function state:__index(key)
         return state_record
     end
 
-    -- Normal state data read
+    -- Normal state variable read
     return self._data[key]
 end
 
@@ -60,12 +66,12 @@ function state:__newindex(key, value)
         error("invalid key, got type number", 2)
     end
 
-    -- Disallow overwriting data in an existing key
+    -- Disallow overwriting an existing key
     if self._data[key] ~= nil then
         error("key already exists in state", 2)
     end
 
-    -- Normal state data write
+    -- Normal state variable write
     self._data[key] = value
 end
 
