@@ -8,12 +8,12 @@ function state.new()
     return self
 end
 
-function state_timestamp(self)
+local function state_timestamp(self)
     -- Timestamp state data
     self.timestamp = os.time()
 end
 
-function state_record(self)
+local function state_record(self)
     -- Add the data to our history
     self._history[#self._history+1] = json.encode(self._data)
     -- Clear our data
