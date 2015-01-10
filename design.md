@@ -2,7 +2,7 @@
 
 ## Basic Operation
 
-`gardend` is a discrete-time control daemon with a lightweight framework for managing system state and implementing processing blocks. System state is maintained in a flat associative array, mapping variable names to values that may be inputs, intermediate computations, or outputs. Processing blocks are drivers, controllers, and post-processing routines that read sensors, compute output states, drive outputs, compute statistics or generate visualizations, respsectively, and may access or populate variables in the system state. All system state is maintained in one time-indexed structure that is stored persistently, so that the daemon may recover from a crash or reboot to resume system control with past state left in-tact.
+`gardend` is a discrete-time control daemon with a lightweight framework for managing system state and implementing processing blocks. System state is maintained in a flat associative array, mapping variable names to values that may be inputs, intermediate computations, or outputs. Processing blocks are drivers, controllers, and post-processing routines that read sensors, compute output states, drive outputs, compute statistics or generate visualizations, respectively, and may access or populate variables in the system state. All system state is maintained in one time-indexed structure that is stored persistently, so that the daemon may recover from a crash or reboot to resume system control with past state left in-tact.
 
 The main job of the daemon is executing processing blocks in four stages on every time step: `inputs`, `controllers`, `outputs`, and `postprocessors`. The `inputs` stage runs all input processing blocks to introduce input variables into the system state for the current time step, from hardware sensors or other data sources. The `controllers` stage runs all controller processing blocks to produce output variables from current and past system state variables. The `outputs` stage runs all output processing blocks to apply output variables to hardware or other external agents. Finally, the `postprocessors` stage runs all post-processing blocks to carry out arbitrary post-processing of the current and past system state variables, such as updating visualizations or statistics. The four categories of processing stages ensure that all input and output dependencies between processing blocks are accounted for during their construction.
 
@@ -35,7 +35,7 @@ end
 
 ## System State
 
-The system state for a particular time step is stored in a simple table containing the timestamp, input data, intermediate computations, and outputs. Input blocks should populate variables in the system state with sampled data. Controller blocks should populate variables in the system state with computed outputs and any intermediate computations, if necessary. Output blocks should access variables in the system state to drive outputs. Postprocessor blocks should access variables in the system state to generate visualiaztions or statistics. In general, processing blocks should not maintain their own state and should keep all required state in the system state structure.
+The system state for a particular time step is stored in a simple table containing the timestamp, input data, intermediate computations, and outputs. Input blocks should populate variables in the system state with sampled data. Controller blocks should populate variables in the system state with computed outputs and any intermediate computations, if necessary. Output blocks should access variables in the system state to drive outputs. Postprocessor blocks should access variables in the system state to generate visualizations or statistics. In general, processing blocks should not maintain their own state and should keep all required state in the system state structure.
 
 System state table example:
 
@@ -210,9 +210,10 @@ foo_instance:process(state)
 
 ## System State Persistence
 
-At the end of each time step, the system state is serialized into a JSON object and inserted as a row into the SQLite database specified by the configuration variable `dbfile`. Look-ups into past system state made by processing blocks are made by fetching the row corresponding to the time index to look up and deserializing the JSON object into a system state table. SQLite provides durable storage and efficient random access into past system state and JSON fulfills the need for serializing and deserializing the system state to/from storage.
+At the end of each time step, the system state is serialized into a JSON object and inserted as a row into the SQLite database specified by the configuration variable `dbfile`. Look-ups into past system state by processing blocks are made by fetching the row corresponding to the time index to look up and deserializing the JSON object stored there into a system state table. SQLite provides durable storage and efficient random access into past system state and JSON fulfills the need for serializing and deserializing the system state to/from storage.
 
 The SQLite database schema is:
+
 ```
 CREATE TABLE GardenState(timestamp INTEGER, state TEXT);
 ```
