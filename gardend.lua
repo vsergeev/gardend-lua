@@ -31,7 +31,7 @@ end
 if gardenConfig.logfile == nil then
     logfile = io.stdout
 else
-    logfile = io.open(gardenConfig.logfile, "a")
+    logfile = assert(io.open(gardenConfig.logfile, "a"))
 end
 
 function log(fmt, ...)
