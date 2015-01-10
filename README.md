@@ -19,11 +19,12 @@
 
 Lua 5.2 or greater
 
-LuaRocks: `lua-periphery` (for I/O and sleep), `lua-cjson` (for state serialization), `busted` (for unit tests)
+LuaRocks: `lua-periphery` (for I/O and sleep), `lua-cjson` (for state serialization), `lsqlite3` (for state storage), `busted` (for unit tests)
 
 ```
 $ sudo luarocks install lua-periphery
 $ sudo luarocks install lua-cjson
+$ sudo luarocks install lsqlite3
 $ sudo luarocks install busted
 ```
 
