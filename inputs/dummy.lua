@@ -1,19 +1,18 @@
 local dummy = {}
 dummy.__index = dummy
-
 setmetatable(dummy, {__call = function(self, ...) return self.new(...) end})
 
 function dummy.new(configuration)
     local self = setmetatable({}, dummy)
+    self.var = configuration.variables[1]
+    self.values = configuration.values
+    self.i = 0
     return self
 end
 
 function dummy:process(state)
-    if state[-1] == nil then
-        state.i = 0
-    else
-        state.i = state[-1].i + 1
-    end
+    state[self.var] = self.values[self.i+1]
+    self.i = (self.i + 1) % #self.values
 end
 
 return dummy
