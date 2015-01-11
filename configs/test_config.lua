@@ -16,13 +16,19 @@ configuration = {
             temperature_target = 75.0,
             temperature_window = 3.0,
         },
+        timer = {
+            driver = "timer",
+            variables = {"qux"},
+            time_on = {hour = 19, min = 20, sec = 10},
+            time_off = {hour = 19, min = 20, sec = 40},
+        },
     },
     outputs = {
     },
     postprocessors = {
         textstats = {
             driver = "textstats",
-            variables = {{name = "foo", units = "°C"}, {name = "hyst", units=""}, {name = "bar", units = "(on/off)"}},
+            variables = {{name = "foo", units = "°C"}, {name = "hyst", units=""}, {name = "bar", units = "(on/off)"}, {name = "qux", units = ""}},
             file = nil,
         },
     },
