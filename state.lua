@@ -82,10 +82,13 @@ function state:__index(key)
         local ok, results = pcall(sql_execute, self._db, "SELECT state FROM GardenState WHERE rowid=(SELECT MAX(rowid) FROM GardenState)+?;", tonumber(key)+1)
         if not ok then
             error(string.format("querying past state in database: %s", results))
-        elseif #results == 0 then
-            return nil
         end
-        local past_state = json.decode(results[1])
+        local past_state
+        if #results == 0 then
+            past_state = {}
+        else
+            past_state = json.decode(results[1])
+        end
         return setmetatable({}, {__index = past_state, __newindex = function (t, k, v) error("modifying past state") end})
     end
 

@@ -50,7 +50,7 @@ System state table example:
 }
 ```
 
-Processing blocks may access past system state by indexing the state structure with a negative index -- e.g. `state[-1]` refers to the system state one time step ago. If the system state does not exist for a given time index, it will be `nil`.
+Processing blocks may access past system state by indexing the state structure with a negative index -- e.g. `state[-1]` refers to the system state one time step ago. If the system state does not exist for a given time index, it will be the empty table `{}`.
 
 ``` lua
 state[-1] ->
@@ -73,9 +73,9 @@ state[-2] ->
         heatmat_state = true,
 }
 
-state{-3] -> nil
+state{-3] -> {}
 
-state[-500] -> nil
+state[-500] -> {}
 ```
 
 ## Configuration
