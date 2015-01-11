@@ -55,7 +55,7 @@ local function loadblocks(configuration)
 
             path = blktype .. "." .. blkconfig.driver
             log("Loading %s block '%s' (%s)", blktype, blkinstance, path)
-            blkobject = {instance = blkinstance, type = blktype, path = path, object = require(path)(config)}
+            blkobject = {instance = blkinstance, type = blktype, path = path, object = require(path)(blkconfig)}
 
             blkobjects[#blkobjects+1] = blkobject
         end
