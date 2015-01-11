@@ -6,7 +6,7 @@ function heatmat.new(configuration)
     local self = setmetatable({}, heatmat)
 
     if #configuration.variables ~= 3 then
-        error("insufficient number of variables. expected {temperature, hysteresis, heatmat}")
+        error("invalid number of state variables in configuration. expected 3, {temperature, hysteresis, heatmat}")
     elseif configuration.temperature_target == nil then
         error("missing temperature target in configuration")
     elseif configuration.temperature_window == nil then
