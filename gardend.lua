@@ -83,8 +83,6 @@ while true do
     end
 
     log("Recording state...")
-    s, _ = ("\t" .. tostring(gardenState)):gsub("\n", "\n\t")
-    log(s)
     gardenState:record()
 
     periphery.sleep_ms(gardenConfig.timestep*1000)
