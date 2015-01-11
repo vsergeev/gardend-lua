@@ -169,6 +169,8 @@ configuration = {
             variables = {"growlight_state"},
             -- Block-specific configuration
             gpio_number = 123,
+            active_low = false,
+            initial_value = false,
         },
         heatmat_switch = {
             -- Driver name
@@ -177,6 +179,8 @@ configuration = {
             variables = {"heatmat_state"},
             -- Block-specific configuration
             gpio_number = 125,
+            active_low = false,
+            initial_value = false,
         },
     },
     postprocessors = {
