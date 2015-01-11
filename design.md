@@ -191,7 +191,7 @@ configuration = {
             variables = {
                 {name = "tray_temperature", units = "°C"},
                 {name = "tray_humidity", units = "%"},
-                {name = "tray_light", units = ""},
+                {name = "tray_light", units = "lux"},
                 {name = "heatmat_state", units = "(on/off)"},
                 {name = "growlight_state", units = "(on/off)"},
             },
