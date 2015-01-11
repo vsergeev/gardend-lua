@@ -53,11 +53,15 @@ local function loadblocks(configuration)
                 error("Invalid configuration: instance '" .. blkinstance .. "' missing 'driver' in configuration")
             end
 
-            path = blktype .. "." .. blkconfig.driver
-            log("Loading %s block '%s' (%s)", blktype, blkinstance, path)
-            blkobject = {instance = blkinstance, type = blktype, path = path, object = require(path)(blkconfig)}
+            local blkpath = blktype .. "." .. blkconfig.driver
+            log("Loading %s block '%s' (%s)", blktype, blkinstance, blkpath)
 
-            blkobjects[#blkobjects+1] = blkobject
+            local ok, object = pcall(require(blkpath), blkconfig)
+            if not ok then
+                error(string.format("configuring block '%s' (%s): %s", blkinstance, blkpath, tostring(object)))
+            end
+
+            blkobjects[#blkobjects+1] = {instance = blkinstance, type = blktype, path = blkpath, object = object}
         end
     end
 
