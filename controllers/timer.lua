@@ -6,7 +6,7 @@ function timer.new(configuration)
     local self = setmetatable({}, timer)
 
     if #configuration.variables ~= 1 then
-        error("insufficient number of variables. expected {output}")
+        error("invalid number of state variables in configuration. expected 1")
     elseif not (configuration.time_on and configuration.time_on.hour and configuration.time_on.min and configuration.time_on.sec) then
         error("invalid time_on in configuration. expected table with hour, min, sec.")
     elseif not (configuration.time_off and configuration.time_off.hour and configuration.time_off.min and configuration.time_off.sec) then
