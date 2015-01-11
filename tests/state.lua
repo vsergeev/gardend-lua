@@ -1,7 +1,9 @@
+-- Unit test for state management code
 local state = require("state")
 
 describe("basic usage", function ()
     local s = state.new()
+
     s:timestamp()
     s.abc = 123
     s.bar = "hello world"
