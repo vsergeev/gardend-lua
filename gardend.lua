@@ -75,7 +75,7 @@ local gardenState = state.new(gardenConfig.dbfile)
 
 -- Run system loop
 while true do
-    gardenState:timestamp()
+    gardenState:stamp()
 
     for _, block in ipairs(gardenBlocks) do
         log("Processing %s block instance '%s' (%s)", block.type, block.instance, block.path)

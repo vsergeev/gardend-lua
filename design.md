@@ -12,7 +12,7 @@ Daemon main loop pseudocode:
 
 ```
 while true do
-    state:timestamp()
+    state:stamp()
 
     for _, block in ipairs(InputBlocks) do
         block.object:process(state)

@@ -4,12 +4,12 @@ local state = require("state")
 describe("basic usage", function ()
     local s = state.new()
 
-    s:timestamp()
+    s:stamp()
     s.abc = 123
     s.bar = "hello world"
     s:record()
 
-    s:timestamp()
+    s:stamp()
     s.def = 100
     s:record()
 
@@ -50,8 +50,8 @@ end)
 describe("errors", function ()
     it("checks we cannot timestamp state twice", function ()
         local s = state.new()
-        s:timestamp()
-        assert.has_error(function () s:timestamp() end)
+        s:stamp()
+        assert.has_error(function () s:stamp() end)
     end)
 
     it("checks we cannot assign a key twice", function ()
@@ -72,7 +72,7 @@ describe("errors", function ()
 
     it("checks we cannot modify current state", function ()
         local s = state.new()
-        s:timestamp()
+        s:stamp()
         assert.has_error(function () s[0].timestamp = 4 end)
     end)
 
@@ -91,7 +91,7 @@ end)
 describe("tostring", function ()
     local s = state.new()
 
-    s:timestamp()
+    s:stamp()
     s.foo = 456
     s.bar = "bananas"
 

@@ -42,7 +42,7 @@ function state.new(dbpath)
     return self
 end
 
-local function state_timestamp(self)
+local function state_stamp(self)
     -- Timestamp state data
     self.timestamp = os.time()
 end
@@ -93,8 +93,8 @@ function state:__index(key)
     end
 
     -- Methods
-    if key == "timestamp" then
-        return state_timestamp
+    if key == "stamp" then
+        return state_stamp
     elseif key == "record" then
         return state_record
     end
