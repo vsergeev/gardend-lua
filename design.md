@@ -122,15 +122,6 @@ configuration = {
     dbfile = "gardend.db",
     logfile = "/var/log/gardend.log",
     inputs = {
-        ambient_temperature_sensor = {
-            -- Driver name
-            driver = "tmp102",
-            -- State configuration
-            variables = {"ambient_temperature"},
-            -- Block-specific configuration
-            i2c_devpath = "/dev/i2c-0",
-            i2c_address = 0x20,
-        },
         tray_temperature_and_humidity_sensor = {
             -- Driver name
             driver = "htu21d",
@@ -140,6 +131,15 @@ configuration = {
             i2c_devpath = "/dev/i2c-0",
             i2c_address = 0x21,
         },
+        tray_light_sensor = {
+            -- Driver name
+            driver = "tsl2591",
+            -- State configuration
+            variables = {"tray_light"},
+            -- Block-specific configuration
+            i2c_devpath = "/dev/i2c-0",
+            i2c_address = 0x24,
+        },
     },
     controllers = {
         growlight = {
@@ -148,14 +148,14 @@ configuration = {
             -- State configuration
             variables = {"growlight_state"},
             -- Block-specific configuration
-            time_on = "6:00am",
-            time_off = "8:00pm",
+            time_on = {hour = 6, min = 0, sec = 0},
+            time_off = {hour = 20, min = 0, sec = 0},
         },
         heatmat = {
             -- Driver name
             driver = "heatmat",
             -- State configuration
-            variables = {"tray_temperature", "heatmat_state"},
+            variables = {"tray_temperature", "heatmat_hysteresis", "heatmat_state"},
             -- Block-specific configuration
             temperature_target = 80.0,
             temperature_window = 5.0,
@@ -180,10 +180,19 @@ configuration = {
         },
     },
     postprocessors = {
-        console = {
+        textstats = {
             -- Driver name
-            driver = "consolestats",
+            driver = "textstats",
+            -- State configuration
+            variables = {
+                {name = "tray_temperature", units = "°C"},
+                {name = "tray_humidity", units = "%"},
+                {name = "tray_light", units = ""},
+                {name = "heatmat_state", units = "(on/off)"},
+                {name = "growlight_state", units = "(on/off)"},
+            },
             -- Block-specific configuration
+            file = nil,
         },
     },
 }
