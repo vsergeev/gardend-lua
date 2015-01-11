@@ -23,7 +23,7 @@ end
 
 local ok, gardenConfig = pcall(loadconfig, arg[1])
 if not ok then
-    io.stderr:write(gardenConfig .. "\n")
+    io.stderr:write(tostring(gardenConfig) .. "\n")
     os.exit(-1)
 end
 
@@ -66,7 +66,7 @@ end
 
 local ok, gardenBlocks = pcall(loadblocks, gardenConfig)
 if not ok then
-    io.stderr:write(gardenBlocks .. "\n")
+    io.stderr:write(tostring(gardenBlocks) .. "\n")
     os.exit(-1)
 end
 
