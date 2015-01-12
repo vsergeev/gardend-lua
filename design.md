@@ -44,7 +44,7 @@ System state table example:
         timestamp = 1420022112.0,
         ambient_temperature = 25.0,
         tray_temperature = 27.6,
-        tray_humidity = 0.70,
+        tray_humidity = 70.0,
         growlight_state = true,
         heatmat_state = true,
 }
@@ -58,7 +58,7 @@ state[-1] ->
         timestamp = 1420022052.0,
         ambient_temperature = 24.9,
         tray_temperature = 27.5,
-        tray_humidity = 0.71,
+        tray_humidity = 71.0,
         growlight_state = true,
         heatmat_state = true,
 }
@@ -68,12 +68,12 @@ state[-2] ->
         timestamp = 1420021992.0,
         ambient_temperature = 24.8,
         tray_temperature = 27.5,
-        tray_humidity = 0.70,
+        tray_humidity = 70.0,
         growlight_state = true,
         heatmat_state = true,
 }
 
-state{-3] -> {}
+state[-3] -> {}
 
 state[-500] -> {}
 ```
@@ -129,20 +129,20 @@ configuration = {
             variables = {"tray_temperature", "tray_humidity"},
             -- Block-specific configuration
             i2c_devpath = "/dev/i2c-0",
-            i2c_address = 0x21,
+            i2c_address = 0x40,
         },
         tray_light_sensor = {
             -- Driver name
-            driver = "tsl2591",
+            driver = "tsl2561",
             -- State configuration
             variables = {"tray_light"},
             -- Block-specific configuration
             i2c_devpath = "/dev/i2c-0",
-            i2c_address = 0x24,
+            i2c_address = 0x39,
         },
     },
     controllers = {
-        growlight = {
+        growlight_timer = {
             -- Driver name
             driver = "timer",
             -- State configuration
@@ -151,7 +151,7 @@ configuration = {
             time_on = {hour = 6, min = 0, sec = 0},
             time_off = {hour = 20, min = 0, sec = 0},
         },
-        heatmat = {
+        heatmat_controller = {
             -- Driver name
             driver = "heatmat",
             -- State configuration
