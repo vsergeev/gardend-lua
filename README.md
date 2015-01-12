@@ -13,6 +13,7 @@
 * `state.lua`: state management
 * `gardend.lua`: garden daemon
 * `design.md`: design document
+* `LICENSE`: MIT license
 * `README.md`: this README
 
 ## Dependencies
