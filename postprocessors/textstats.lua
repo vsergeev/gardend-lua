@@ -17,9 +17,9 @@ function textstats.new(configuration)
 end
 
 function textstats:process(state)
-    s = {}
+    local s = {}
     for _,variable in ipairs(self.variables) do
-        name, units = variable.name, variable.units
+        local name, units = variable.name, variable.units
         s[#s+1] = string.format("\t%s: %s %s", name, tostring(state[name]), units)
     end
     s = table.concat(s, "\n")
