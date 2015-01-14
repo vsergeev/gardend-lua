@@ -119,8 +119,8 @@ Configuration example:
 ``` lua
 configuration = {
     timestep = 60.0,
-    dbfile = "gardend.db",
-    logfile = "/var/log/gardend.log",
+    dbfile = "/var/gardend/gardend.db",
+    logfile = "/var/gardend/gardend.log",
     inputs = {
         tray_temperature_and_humidity_sensor = {
             -- Driver name
@@ -187,7 +187,7 @@ configuration = {
         textstats = {
             -- Driver name
             driver = "textstats",
-            -- State configuration
+            -- Block-specific configuration
             variables = {
                 {name = "tray_temperature", units = "°C"},
                 {name = "tray_humidity", units = "%"},
@@ -195,9 +195,32 @@ configuration = {
                 {name = "heatmat_state", units = "(on/off)"},
                 {name = "growlight_state", units = "(on/off)"},
             },
-            -- Block-specific configuration
             file = nil,
         },
+        webstats = {
+            -- Driver name
+            driver = "webstats",
+            -- Block-specific configuration
+            wwwdir = '/var/www',
+            blogfile = '/var/gardend/microblog.lua',
+            stats_variables = {
+                {name = "tray_temperature", units = "°C", description = "Tray Temperature"},
+                {name = "tray_humidity", units = "%", description = "Tray Humidity"},
+                {name = "tray_light", units = "lux", description = "Tray Light"},
+                {name = "heatmat_state", units = "(on/off)", description = "Heatmat State"},
+                {name = "growlight_state", units = "(on/off)", description = "Growlight State"},
+            },
+            plot_utc_offset = -8,
+            plot_width = 640,
+            plot_height = 240,
+            plot_variables = {
+                {name = "tray_temperature", duration = 8*60*60},
+                {name = "tray_humidity", duration = 8*60*60},
+                {name = "tray_light", duration = 8*60*60},
+                {name = "heatmat_state", duration = 8*60*60},
+                {name = "growlight_state", duration = 8*60*60},
+            },
+        }
     },
 }
 ```
