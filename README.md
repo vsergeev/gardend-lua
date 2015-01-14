@@ -1,7 +1,5 @@
 # gardend
 
-[Design document](design.md)
-
 ## File Structure
 
 * `inputs/`: Input blocks
@@ -16,16 +14,21 @@
 * `LICENSE`: MIT license
 * `README.md`: this README
 
+## Design
+
+See the [design document](design.md).
+
 ## Dependencies
 
 Lua 5.2 or greater
 
-LuaRocks: `lua-periphery` (for I/O and sleep), `lua-cjson` (for state serialization), `lsqlite3` (for state storage), `busted` (for unit tests)
+LuaRocks: `lua-periphery` (for I/O and sleep), `lua-cjson` (for state serialization), `lsqlite3` (for state storage), `lua-resty-template` (for webstats), `busted` (for unit tests)
 
 ```
 $ sudo luarocks install lua-periphery
 $ sudo luarocks install lua-cjson
 $ sudo luarocks install lsqlite3
+$ sudo luarocks install lua-resty-template
 $ sudo luarocks install busted
 ```
 
@@ -35,7 +38,7 @@ $ sudo luarocks install busted
 $ lua gardend.lua <configuration file>
 ```
 
-e.g., propagation configuration:
+Propagation configuration:
 
 ```
 $ lua gardend.lua configs/propagation_config.lua
