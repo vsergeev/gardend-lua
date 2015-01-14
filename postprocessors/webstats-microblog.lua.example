@@ -1,0 +1,22 @@
+blog = {
+    {
+        date = "Tue Jan 16 03:31:07 PST 2015",
+        title = "Lorem ipsum",
+        content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    },
+    {
+        date = "Tue Jan 15 03:31:07 PST 2015",
+        title = "Third Post",
+        content = "roses are red and violets are blue",
+    },
+    {
+        date = "Tue Jan 14 03:31:07 PST 2015",
+        title = "Second Post",
+        content = "testing 123",
+    },
+    {
+        date = "Tue Jan 13 03:31:07 PST 2015",
+        title = "First Post",
+        content = "Hello World!",
+    },
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>gardend webstats</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<div class="page">
+    <header class="site-header">
+        <span class="site-title">gardend webstats</span>
+    </header>
+
+    <div class="section">
+        <header class="section-title">Current<span class="stats-date">{{os.date("%c", state.timestamp)}}</span></header>
+        <div class="stats">
+            <table class="stats-table">
+                {% for _, variable in ipairs(stats_variables) do %}
+                <tr class="stat">
+                    <td class="stat-description"><span class="stat-description">{{variable.description}}</span></td>
+                    <td class="stat-name"><span class="stat-name">{{variable.name}}</span></td>
+                    <td class="stat-value"><span class="stat-value">{{state[variable.name]}} {{variable.units}}</span></td>
+                </tr>
+                {% end %}
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <header class="section-title">Plots</header>
+        <div class="plots">
+            {% for i, _ in ipairs(plot_variables) do %}
+            <img src="plots/plot{{i}}.png">
+            {% end %}
+        </div>
+    </div>
+
+    <div class="section">
+        <header class="section-title">Webcam</header>
+        <div class="webcam">
+            <img src="webcam.jpg">
+        </div>
+    </div>
+
+    <div class="section">
+        <header class="section-title">Microblog</header>
+        <div class="blog">
+            {% for _, entry in ipairs(blog) do %}
+            <div class="post">
+                <div class="post-header">
+                    <span class="post-title">{{entry.title}}</span><span class="post-date">{{entry.date}}</span>
+                </div>
+                <div class="post-content">
+                    {{entry.content}}
+                </div>
+            </div>
+            {% end %}
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <span class="site-footnote">Powered by <a href="https://github.com/vsergeev/gardend">gardend</a>, <a href="http://www.lua.org/">lua</a>.</span>
+    </footer>
+</div>
+</body>
+</html>
