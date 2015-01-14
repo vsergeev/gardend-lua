@@ -31,5 +31,26 @@ configuration = {
             variables = {{name = "foo", units = "°C"}, {name = "hyst", units=""}, {name = "bar", units = "(on/off)"}, {name = "qux", units = ""}},
             file = nil,
         },
+        webstats = {
+            -- Driver name
+            driver = "webstats",
+            -- Block-specific configuration
+            wwwdir = "./misc",
+            blogfile = "postprocessors/webstats-microblog.lua.example",
+            stats_variables = {
+                {name = "foo", units = "C", description = "Tray Temperature"},
+                {name = "hyst", units = "%", description = "Tray Humidity"},
+                {name = "bar", units = "(on/off)", description = "Heatmat State"},
+                {name = "qux", units = "(on/off)", description = "Growlight State"},
+            },
+            plot_utc_offset = -8,
+            plot_width = 600,
+            plot_height = 240,
+            plot_variables = {
+                {name = "foo", duration = 30},
+                {name = "bar", duration = 30},
+                {name = "qux", duration = 30},
+            },
+        }
     },
 }
