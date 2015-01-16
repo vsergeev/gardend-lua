@@ -126,7 +126,7 @@ function webstats:plot(state)
 
     append(string.format('set terminal pngcairo transparent truecolor enhanced size %d, %d font "Arial,8"', self.plot_width, self.plot_height))
     -- Output
-    append(string.format('set output "%s/plot.png"', self.wwwdir))
+    append('set output "/tmp/gardend_plot.png"')
     -- Mulitplot Setup
     append(string.format('set multiplot layout %d, 1', #ydatas))
     -- X Input
@@ -176,6 +176,9 @@ function webstats:plot(state)
 
     -- Execute gnuplot
     local result, exit, code = os.execute("gnuplot /tmp/gardend_plot_script")
+
+    -- Move the file to the plot file
+    local result, exit, code = os.execute("mv /tmp/gardend_plot.png " .. self.wwwdir .. "/plot.png")
 end
 
 function webstats:process(state)
