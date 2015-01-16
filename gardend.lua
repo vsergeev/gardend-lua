@@ -93,6 +93,7 @@ while true do
     log("Recording state...")
     gardenState:record()
 
+    log("Sleeping...")
     periphery.sleep_ms(math.max((timestamp + gardenConfig.timestep - os.time())*1000, 0.0))
 end
 
