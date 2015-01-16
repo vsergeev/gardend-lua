@@ -105,7 +105,7 @@ function webstats:plot(state)
 
             -- Convert booleans to integers
             if type(value) == "boolean" then
-                value = true and 1 or 0
+                value = value and 1 or 0
             end
 
             table.insert(xdata, 1, state[i].timestamp + self.plot_utc_seconds_offset)
