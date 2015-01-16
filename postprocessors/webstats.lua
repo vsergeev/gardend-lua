@@ -124,7 +124,7 @@ function webstats:plot(state)
         script[#script + 1] = setting
     end
 
-    append(string.format('set terminal pngcairo transparent truecolor enhanced size %d, %d font "Arial,8"', self.plot_width, self.plot_height))
+    append(string.format('set terminal pngcairo transparent truecolor noenhanced size %d, %d font "Arial,8"', self.plot_width, self.plot_height))
     -- Output
     append('set output "/tmp/gardend_plot.png"')
     -- Mulitplot Setup
