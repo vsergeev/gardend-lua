@@ -67,7 +67,7 @@ function webstats.new(configuration)
     end
 
     self.wwwdir = configuration.wwwdir
-    self.templatefile, _ = debug.getinfo(1, "S").source:sub(2):gsub("lua","html")
+    self.templatefile = debug.getinfo(1, "S").source:sub(2):gsub("lua","html")
     self.blogfile = configuration.blogfile
     self.stats_variables = configuration.stats_variables
     self.plot_utc_seconds_offset = configuration.plot_utc_offset*60*60
@@ -162,7 +162,7 @@ function webstats:plot(state)
 
     -- Write plot data
     for i = 1, #self.plot_variables do
-        f = assert(io.open(string.format("/tmp/gardend_plot%d_data", i), "w"))
+        local f = assert(io.open(string.format("/tmp/gardend_plot%d_data", i), "w"))
         for j = 1, #xdatas[i] do
             f:write(xdatas[i][j] .. "\t" .. ydatas[i][j] .. "\n")
         end
@@ -170,12 +170,12 @@ function webstats:plot(state)
     end
 
     -- Write plot script
-    f = assert(io.open("/tmp/gardend_plot_script", "w"))
+    local f = assert(io.open("/tmp/gardend_plot_script", "w"))
     f:write(table.concat(script, "\n"))
     f:close()
 
     -- Execute gnuplot
-    result, exit, code = os.execute("gnuplot /tmp/gardend_plot_script")
+    local result, exit, code = os.execute("gnuplot /tmp/gardend_plot_script")
 end
 
 function webstats:process(state)
