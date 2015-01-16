@@ -1,6 +1,6 @@
 configuration = {
-    timestep = 2.0,
-    dbfile = nil,
+    timestep = 3.0,
+    dbfile = 'test.db',
     logfile = nil,
     inputs = {
         heatmat = {
@@ -45,11 +45,11 @@ configuration = {
             },
             plot_utc_offset = -8,
             plot_width = 600,
-            plot_height = 240,
+            plot_height = 600,
             plot_variables = {
-                {name = "foo", duration = 30},
-                {name = "bar", duration = 30},
-                {name = "qux", duration = 30},
+                {name = "foo", duration = 60*60},
+                {name = "bar", duration = 60*60},
+                {name = "qux", duration = 60*60},
             },
         }
     },
