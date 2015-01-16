@@ -79,7 +79,7 @@ local gardenState = state.new(gardenConfig.dbfile)
 
 -- Run system loop
 while true do
-    gardenState:stamp()
+    local timestamp = gardenState:stamp()
 
     for _, block in ipairs(gardenBlocks) do
         log("Processing %s block instance '%s' (%s)", block.type, block.instance, block.path)
@@ -93,6 +93,6 @@ while true do
     log("Recording state...")
     gardenState:record()
 
-    periphery.sleep_ms(gardenConfig.timestep*1000)
+    periphery.sleep_ms((timestamp + gardenConfig.timestep - os.time())*1000)
 end
 
