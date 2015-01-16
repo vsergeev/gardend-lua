@@ -45,6 +45,8 @@ end
 local function state_stamp(self)
     -- Timestamp state data
     self.timestamp = os.time()
+
+    return self.timestamp
 end
 
 local function state_record(self)
