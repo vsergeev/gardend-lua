@@ -1,0 +1,242 @@
+/******************************************************************************/
+/* General */
+/******************************************************************************/
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 300;
+  background-color: #1f1f1f;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: 400;
+}
+
+a, a:visited {
+  color: #e3ceab;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #8cd0d3;
+}
+
+/******************************************************************************/
+/* Page */
+/******************************************************************************/
+
+.page {
+  max-width: 650px;
+  padding: 0 30px;
+  margin: 0 auto;
+}
+
+/******************************************************************************/
+/* Site header */
+/******************************************************************************/
+
+.site-header {
+  margin-top: 10px;
+  margin-bottom: -5px;
+}
+
+.site-title {
+  color: #e3ceab;
+  font-size: 30px;
+}
+
+/******************************************************************************/
+/* Sections */
+/******************************************************************************/
+
+.section {
+  background-color: #3f3f3f;
+  color: #dcdcdc;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 650px;
+  font-size: 12px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+
+.section-title {
+  color: #e3ceab;
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 400;
+  margin: 0 0 5px;
+}
+
+/******************************************************************************/
+/* Stats */
+/******************************************************************************/
+
+.stats-date {
+  font-size: 12px;
+  color: #818181;
+  float: right;
+  margin: 5px 2.5px 0 0;
+}
+
+.stats-table {
+  width: 90%;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
+}
+
+td.stat-description {
+  width: 40%;
+}
+span.stat-description {
+  font-weight: bold;
+}
+
+td.stat-name {
+  width: 35%;
+}
+span.stat-name {
+}
+
+td.stat-value {
+  width: 25%;
+}
+span.stat-value {
+}
+
+/******************************************************************************/
+/* Plots */
+/******************************************************************************/
+
+.plots img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+.plot {
+}
+
+.plots {
+  margin-bottom: -5px;
+}
+
+/******************************************************************************/
+/* Webcam */
+/******************************************************************************/
+
+.webcam img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.webcam {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/******************************************************************************/
+/* Blog */
+/******************************************************************************/
+
+.blog {
+  margin-top: 15px;
+  margin-bottom: -5px;
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+.post-header {
+  border-bottom: solid 1px #8f8f8f;
+  height: 20px;
+  margin-bottom: 5px;
+}
+
+.post-title {
+  color: #dcdccc;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 400;
+  float: left;
+}
+
+.post-date {
+  font-size: 12px;
+  color: #818181;
+  float: right;
+}
+
+.post-content {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+}
+
+/******************************************************************************/
+/* System Information */
+/******************************************************************************/
+
+.sysinfo-table {
+  width: 95%;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  border-spacing: 5px;
+}
+
+tr.sysinfo-row {
+  padding-bottom: 10px;
+}
+
+td.sysinfo-name {
+  width: 30%;
+}
+span.sysinfo-name {
+}
+
+td.sysinfo-value {
+  width: 70%;
+}
+span.sysinfo-value {
+  font-family: monospace;
+}
+
+/******************************************************************************/
+/* Site footer */
+/******************************************************************************/
+
+.site-footer {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.site-footnote {
+  font-size: 15px;
+  letter-spacing: -.3px;
+  color: #828282;
+}
+
