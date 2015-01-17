@@ -1,4 +1,5 @@
 configuration = {
+    name = "propagation",
     timestep = 60.0,
     dbfile = "/var/gardend/gardend.db",
     logfile = "/var/gardend/gardend.log",

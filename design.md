@@ -86,9 +86,10 @@ Configuration format:
 
 ``` lua
 configuration = {
+    name = "<configuration name string>",
     timestep = <time step in seconds>,
-    dbfile = <database file path>,
-    logfile = <log file path>,
+    dbfile = "<database file path>",
+    logfile = "<log file path>",
     inputs = {
         <instance name> = {
             -- Driver name

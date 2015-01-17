@@ -1,4 +1,5 @@
 configuration = {
+    name = "dummy test",
     timestep = 5.0,
     dbfile = "test.db",
     logfile = nil,
