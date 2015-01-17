@@ -81,6 +81,10 @@ end
 -- Create state structure
 local gardenState = state.new(gardenConfig.dbfile)
 
+-- Setup a few system constants
+GARDEND_TIMESTEP = gardenConfig.timestep
+GARDEND_START_TIME = os.time()
+
 -- Run system loop
 while true do
     local timestamp = gardenState:stamp()
