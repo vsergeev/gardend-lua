@@ -82,6 +82,7 @@ end
 local gardenState = state.new(gardenConfig.dbfile)
 
 -- Setup a few system constants
+GARDEND_CONFIG_NAME = gardenConfig.name
 GARDEND_TIMESTEP = gardenConfig.timestep
 GARDEND_START_TIME = os.time()
 
