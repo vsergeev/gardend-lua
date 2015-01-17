@@ -55,6 +55,20 @@
         </div>
     </div>
 
+    <div class="section">
+        <header class="section-title">System Information</header>
+        <div class="sysinfo">
+            <table class="sysinfo-table">
+                {% for _, variable in ipairs(sysinfo_variables) do %}
+                <tr class="sysinfo-row">
+                    <td class="sysinfo-name"><span class="sysinfo-name">{{variable.name}}</span></td>
+                    <td class="sysinfo-value"><span class="sysinfo-value">{{variable.value}}</span></td>
+                </tr>
+                {% end %}
+            </table>
+        </div>
+    </div>
+
     <footer class="site-footer">
         <span class="site-footnote">Powered by <a href="https://github.com/vsergeev/gardend">gardend</a>, <a href="http://www.lua.org/">lua</a>.</span>
     </footer>

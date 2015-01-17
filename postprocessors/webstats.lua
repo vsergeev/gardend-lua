@@ -181,6 +181,37 @@ function webstats:plot(state)
     local result, exit, code = os.execute("mv /tmp/gardend_plot.png " .. self.wwwdir .. "/plot.png")
 end
 
+local function read_process(cmd)
+    local f = assert(io.popen(cmd))
+    local s = f:read("*a")
+    f:close()
+    -- Trim trailing newline
+    return s:sub(1, #s-1)
+end
+
+local function read_uptime()
+    local f = assert(io.open("/proc/uptime"))
+    local s = f:read("*a")
+    f:close()
+
+    -- Convert the first field into a number
+    local uptime = tonumber(s:sub(1, (s:find(" "))-1))
+
+    return uptime
+end
+
+local function time_delta_to_string(delta)
+    local days = math.floor(delta/86400.0)
+    delta = delta - days*86400
+    local hours = math.floor(delta/3600)
+    delta = delta - hours*3600
+    local minutes = math.floor(delta/60)
+    delta = delta - minutes*60
+    local seconds = delta
+
+    return string.format("%d days, %d hours, %d minutes, %d seconds", days, hours, minutes, seconds)
+end
+
 function webstats:process(state)
     -- Load blog
     local blog = loadblog(self.blogfile)
@@ -188,8 +219,18 @@ function webstats:process(state)
     -- Render plots
     self:plot(state)
 
+    -- Collect system info
+    local sysinfo_variables = {
+        {name = "gardend timestep", value = GARDEND_TIMESTEP .. " seconds"},
+        {name = "gardend instance start", value = os.date("%c", state[-state:count()].timestamp)},
+        {name = "gardend uptime", value = time_delta_to_string(state.timestamp - GARDEND_START_TIME)},
+        {name = "gardend version", value = GARDEND_VERSION},
+        {name = "system uptime", value = time_delta_to_string(read_uptime())},
+        {name = "system uname", value = read_process('uname -a')},
+    }
+
     -- Render template
-    self.template.render(self.templatefile, {blog = blog, stats_variables = self.stats_variables, plot_variables = self.plot_variables, state = state})
+    self.template.render(self.templatefile, {blog = blog, stats_variables = self.stats_variables, plot_variables = self.plot_variables, sysinfo_variables = sysinfo_variables, state = state})
 end
 
 return webstats
