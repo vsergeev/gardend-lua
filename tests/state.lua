@@ -13,6 +13,7 @@ describe("basic usage", function ()
     s.def = 100
     s:record()
 
+    assert.are.equal(s:count(), 2)
     assert.are.equal(type(s[0]), "table")
     assert.are.equal(type(s[-1]), "table")
     assert.are.equal(type(s[-2]), "table")
@@ -39,6 +40,7 @@ describe("basic history usage", function ()
 
     s.timestamp = 3
 
+    assert.are.equal(s:count(), 3)
     assert.are.same({timestamp = 3}, s[0])
     assert.are.same({timestamp = 7, foo = 789, bar = "coffee"}, s[-1])
     assert.are.same({timestamp = 6, foo = 456, bar = "bananas"}, s[-2])

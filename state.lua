@@ -59,6 +59,16 @@ local function state_record(self)
     self._data = {}
 end
 
+local function state_count(self)
+    -- Count the number of records in the database
+    local ok, results = pcall(sql_execute, self._db, "SELECT COUNT(*) FROM GardenState;")
+    if not ok then
+        error(string.format("count records in database: %s", results))
+    end
+
+    return results[1]
+end
+
 function state:__tostring()
     s = {}
     for k,v in pairs(self._data) do
@@ -99,6 +109,8 @@ function state:__index(key)
         return state_stamp
     elseif key == "record" then
         return state_record
+    elseif key == "count" then
+        return state_count
     end
 
     -- Normal state variable read
