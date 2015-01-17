@@ -1,9 +1,13 @@
 local state = require('state')
 local periphery = require('periphery')
 
+-- Version constant
+GARDEND_VERSION = "1.0.0"
+
 -- Usage
 if #arg < 1 then
-    io.stderr:write(string.format('Usage: %s %s <configuration file>\n', arg[-1], arg[0]))
+    io.stderr:write(string.format('Usage: %s %s <configuration file>\n\n', arg[-1], arg[0]))
+    io.stderr:write(string.format('gardend version %s\n', GARDEND_VERSION))
     os.exit(-1)
 end
 
