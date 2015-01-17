@@ -220,6 +220,7 @@ function webstats:process(state)
 
     -- Collect system info
     local sysinfo_variables = {
+        {name = "gardend configuration", value = GARDEND_CONFIG_NAME},
         {name = "gardend timestep", value = GARDEND_TIMESTEP .. " seconds"},
         {name = "gardend instance start", value = os.date("%c", state[-state:count()].timestamp)},
         {name = "gardend uptime", value = time_delta_to_string(state.timestamp - GARDEND_START_TIME)},
