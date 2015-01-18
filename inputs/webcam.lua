@@ -39,17 +39,22 @@ function webcam:process(state)
         return
     end
 
-    -- Take a picture
-    log(read_process('/usr/bin/fswebcam -r 640x480 --no-shadow --banner-colour "#80000000" --line-colour "#FF000000" /tmp/gardend-webcam.jpg'))
+    -- Take a high-res picture for archiving
+    log(read_process('/usr/bin/fswebcam -r 1920x1080 --no-banner /tmp/gardend-webcam-hi.jpg'))
+    -- Take a low-res picture for webstats
+    log(read_process('/usr/bin/fswebcam -r 640x480 --no-banner /tmp/gardend-webcam-lo.jpg'))
+
+    -- Timestamp the low-res picture
+    assert(os.execute("/usr/bin/convert -font Liberation-Mono -pointsize 12 -fill white -undercolor '#00000080' -gravity SouthEast -annotate +0+-2 '" .. os.date("%c", state.timestamp) .. "' /tmp/gardend-webcam-lo.jpg /tmp/gardend-webcam-lo.jpg"))
 
     local filename = string.format("webcam-%d.jpg", state.timestamp)
 
-    -- Copy image to archive directory
-    assert(os.execute("cp /tmp/gardend-webcam.jpg " .. self.archivedir .. "/" .. filename))
-    -- Copy image to www dir
-    assert(os.execute("mv /tmp/gardend-webcam.jpg " .. self.wwwdir .. "/webcam.jpg"))
+    -- Copy high-res image to archive directory
+    assert(os.execute("cp /tmp/gardend-webcam-hi.jpg " .. self.archivedir .. "/" .. filename))
+    -- Copy low-res image to www dir
+    assert(os.execute("mv /tmp/gardend-webcam-lo.jpg " .. self.wwwdir .. "/webcam.jpg"))
 
-    -- Put filename into the state
+    -- Store filename in state
     state[self.webcam_variable] = filename
 
     -- Reset count
