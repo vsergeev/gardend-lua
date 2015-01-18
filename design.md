@@ -216,15 +216,15 @@ configuration = {
             wwwdir = '/var/www',
             blogfile = '/var/gardend/microblog.lua',
             stats_variables = {
-                {name = "tray_temperature", units = "°C", description = "Tray Temperature"},
+                {name = "tray_temperature", units = "C", description = "Tray Temperature"},
                 {name = "tray_humidity", units = "%", description = "Tray Humidity"},
                 {name = "tray_light", units = "lux", description = "Tray Light"},
                 {name = "heatmat_state", units = "(on/off)", description = "Heatmat State"},
                 {name = "growlight_state", units = "(on/off)", description = "Growlight State"},
             },
             plot_utc_offset = -8,
-            plot_width = 640,
-            plot_height = 240,
+            plot_width = 600,
+            plot_height = 800,
             plot_variables = {
                 {name = "tray_temperature", duration = 8*60*60},
                 {name = "tray_humidity", duration = 8*60*60},
