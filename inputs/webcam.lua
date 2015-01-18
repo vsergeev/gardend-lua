@@ -40,9 +40,9 @@ function webcam:process(state)
     end
 
     -- Take a high-res picture for archiving
-    log(read_process('/usr/bin/fswebcam -r 1920x1080 --no-banner /tmp/gardend-webcam-hi.jpg'))
+    log(read_process('/usr/bin/fswebcam -r 1920x1080 --no-banner /tmp/gardend-webcam-hi.jpg 2>&1'))
     -- Take a low-res picture for webstats
-    log(read_process('/usr/bin/fswebcam -r 640x480 --no-banner /tmp/gardend-webcam-lo.jpg'))
+    log(read_process('/usr/bin/fswebcam -r 640x480 --no-banner /tmp/gardend-webcam-lo.jpg 2>&1'))
 
     -- Timestamp the low-res picture
     assert(os.execute("/usr/bin/convert -font Liberation-Mono -pointsize 12 -fill white -undercolor '#00000080' -gravity SouthEast -annotate +0+-2 '" .. os.date("%c", state.timestamp) .. "' /tmp/gardend-webcam-lo.jpg /tmp/gardend-webcam-lo.jpg"))
