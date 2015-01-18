@@ -10,7 +10,7 @@ configuration = {
             -- State configuration
             variables = {"tray_temperature", "tray_humidity"},
             -- Block-specific configuration
-            i2c_devpath = "/dev/i2c-0",
+            i2c_devpath = "/dev/i2c-2",
             i2c_address = 0x40,
         },
         --tray_light_sensor = {
@@ -49,8 +49,8 @@ configuration = {
             -- State configuration
             variables = {"tray_temperature", "heatmat_hysteresis", "heatmat_state"},
             -- Block-specific configuration
-            temperature_target = 80.0,
-            temperature_window = 5.0,
+            temperature_target = 25.0,
+            temperature_window = 1.5,
         }
     },
     outputs = {
@@ -60,7 +60,7 @@ configuration = {
             -- State configuration
             variables = {"growlight_state"},
             -- Block-specific configuration
-            gpio_number = 123,
+            gpio_number = 68,
             active_low = false,
             initial_value = false,
         },
@@ -70,7 +70,7 @@ configuration = {
             -- State configuration
             variables = {"heatmat_state"},
             -- Block-specific configuration
-            gpio_number = 125,
+            gpio_number = 26,
             active_low = false,
             initial_value = false,
         },
