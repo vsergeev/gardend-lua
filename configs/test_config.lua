@@ -14,6 +14,13 @@ configuration = {
             variables = {"tray_humidity"},
             values = {70.0, 71.0, 71.0, 70.5, 70.0, 70.5, 71.0},
         },
+        webcam = {
+            driver = "webcam",
+            variables = {"webcam_file"},
+            interval = 5,
+            archivedir = "./misc/",
+            wwwdir = "./misc/",
+        },
     },
     controllers = {
         growlight_timer = {
