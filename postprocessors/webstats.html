@@ -8,10 +8,11 @@
 <div class="page">
     <header class="site-header">
         <span class="site-title"><a href="https://github.com/vsergeev/gardend">gardend</a> webstats</span>
+        <span class="site-date">{{os.date("%c", state.timestamp)}}</span>
     </header>
 
     <div class="section">
-        <header class="section-title">Current<span class="stats-date">{{os.date("%c", state.timestamp)}}</span></header>
+        <header class="section-title">Current</header>
         <div class="stats">
             <table class="stats-table">
                 {% for _, variable in ipairs(stats_variables) do %}

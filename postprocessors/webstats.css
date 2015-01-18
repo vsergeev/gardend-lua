@@ -38,9 +38,11 @@ a:hover {
 /******************************************************************************/
 
 .page {
-  max-width: 650px;
-  padding: 0 30px;
-  margin: 0 auto;
+  max-width: 670px;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /******************************************************************************/
@@ -48,13 +50,24 @@ a:hover {
 /******************************************************************************/
 
 .site-header {
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 10px;
-  margin-bottom: -5px;
+  margin-bottom: -2.5px;
+  line-height: 30px;
+  height: 30px;
 }
 
 .site-title {
-  color: #e3ceab;
   font-size: 30px;
+  color: #e3ceab;
+  float: left;
+}
+
+.site-date {
+  font-size: 16px;
+  color: #919191;
+  float: right;
 }
 
 /******************************************************************************/
@@ -72,7 +85,6 @@ a:hover {
   padding-right: 15px;
   padding-top: 10px;
   padding-bottom: 10px;
-  width: 650px;
   font-size: 12px;
   font-family: 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif;
   -webkit-border-radius: 15px;
@@ -85,19 +97,12 @@ a:hover {
   font-size: 22px;
   line-height: 1;
   font-weight: 400;
-  margin: 0 0 5px;
+  margin-bottom: 5px;
 }
 
 /******************************************************************************/
 /* Stats */
 /******************************************************************************/
-
-.stats-date {
-  font-size: 12px;
-  color: #818181;
-  float: right;
-  margin: 5px 2.5px 0 0;
-}
 
 .stats-table {
   width: 90%;
@@ -191,7 +196,7 @@ span.stat-value {
 }
 
 .post-content {
-  margin: 0 0 20px 0;
+  margin-bottom: 20px;
   font-size: 14px;
 }
 
@@ -231,6 +236,7 @@ span.sysinfo-value {
 
 .site-footer {
   text-align: center;
+  margin-top: -2.5px;
   margin-bottom: 15px;
 }
 
