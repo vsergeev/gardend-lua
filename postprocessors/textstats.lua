@@ -18,6 +18,7 @@ end
 
 function textstats:process(state)
     local s = {}
+    s[1] = string.format("\ttimestamp: %s", tostring(state.timestamp))
     for _,variable in ipairs(self.variables) do
         local name, units = variable.name, variable.units
         s[#s+1] = string.format("\t%s: %s %s", name, tostring(state[name]), units)
