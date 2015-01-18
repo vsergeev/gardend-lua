@@ -174,16 +174,16 @@ function webstats:plot(state)
     f:close()
 
     -- Execute gnuplot
-    local result, exit, code = os.execute("gnuplot /tmp/gardend_plot_script")
+    local result, exit, code = assert(os.execute("gnuplot /tmp/gardend_plot_script"))
 
     -- Move the file to the plot file
-    local result, exit, code = os.execute("mv /tmp/gardend_plot.png " .. self.wwwdir .. "/plot.png")
+    local result, exit, code = assert(os.execute("mv /tmp/gardend_plot.png " .. self.wwwdir .. "/plot.png"))
 end
 
 local function read_process(cmd)
-    local f = assert(io.popen(cmd))
+    local f = io.popen(cmd)
     local s = f:read("*a")
-    f:close()
+    assert(f:close())
     -- Trim trailing newline
     return s:sub(1, #s-1)
 end
