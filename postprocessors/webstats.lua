@@ -1,4 +1,5 @@
 local template = require("resty.template")
+local discount = require("discount")
 
 local webstats = {}
 webstats.__index = webstats
@@ -84,6 +85,11 @@ local function loadblog(path)
     f:close()
     local env = {}
     load(t, nil, 't', env)()
+
+    -- Run blog content through markdown
+    for _, entry in ipairs(env.blog) do
+        entry.content = discount(entry.content)
+    end
 
     return env.blog
 end

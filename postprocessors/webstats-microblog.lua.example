@@ -12,7 +12,15 @@ blog = {
     {
         date = "Tue Jan 14 03:31:07 PST 2015",
         title = "Second Post",
-        content = "testing 123",
+        content = [[
+**Testing** *123*
+
+* hello
+* world
+* <http://www.lua.org>
+
+A link to [wikipedia](http://www.wikipedia.org).
+]],
     },
     {
         date = "Tue Jan 13 03:31:07 PST 2015",
