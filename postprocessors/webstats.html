@@ -19,7 +19,11 @@
                 <tr class="stat">
                     <td class="stat-description"><span class="stat-description">{{variable.description}}</span></td>
                     <td class="stat-name"><span class="stat-name">{{variable.name}}</span></td>
+                    {% if type(state[variable.name]) == "number" then %}
+                    <td class="stat-value"><span class="stat-value">{{string.format("%.2f", state[variable.name])}} {{variable.units}}</span></td>
+                    {% else %}
                     <td class="stat-value"><span class="stat-value">{{state[variable.name]}} {{variable.units}}</span></td>
+                    {% end %}
                 </tr>
                 {% end %}
             </table>
