@@ -170,7 +170,7 @@ configuration = {
             variables = {"tray_temperature", "heatmat_hysteresis", "heatmat_state"},
             -- Block-specific configuration
             temperature_target = 25.0,
-            temperature_window = 1.5,
+            temperature_window = 0.5,
         }
     },
     outputs = {
@@ -204,6 +204,7 @@ configuration = {
                 {name = "tray_temperature", units = "°C"},
                 {name = "tray_humidity", units = "%"},
                 {name = "tray_light", units = "lux"},
+                {name = "heatmat_hysteresis", units = ""},
                 {name = "heatmat_state", units = "(on/off)"},
                 {name = "growlight_state", units = "(on/off)"},
             },
