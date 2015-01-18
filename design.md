@@ -115,10 +115,11 @@ configuration = {
 
 The `driver` string specifies the driver filename to load. The `variables` array specifies which state variables the block may populate or access in a driver-specific order.
 
-Configuration example:
+## Example Configuration
 
 ``` lua
 configuration = {
+    name = "propagation",
     timestep = 60.0,
     dbfile = "/var/gardend/gardend.db",
     logfile = "/var/gardend/gardend.log",
@@ -140,6 +141,16 @@ configuration = {
             -- Block-specific configuration
             i2c_devpath = "/dev/i2c-0",
             i2c_address = 0x39,
+        },
+        webcam = {
+            -- Driver name
+            driver = "webcam",
+            -- State configuration
+            variables = {"webcam_file"},
+            -- Block-specific configuration
+            interval = 5, -- 5 timestep interval
+            wwwdir = "/var/www",
+            archivedir = "/mnt/sd/webcam",
         },
     },
     controllers = {

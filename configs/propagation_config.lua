@@ -22,6 +22,16 @@ configuration = {
         --    i2c_devpath = "/dev/i2c-0",
         --    i2c_address = 0x39,
         --},
+        webcam = {
+            -- Driver name
+            driver = "webcam",
+            -- State configuration
+            variables = {"webcam_file"},
+            -- Block-specific configuration
+            interval = 5, -- 5 timestep interval
+            wwwdir = "/var/www",
+            archivedir = "/mnt/sd/webcam",
+        },
     },
     controllers = {
         growlight_timer = {
