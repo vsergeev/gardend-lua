@@ -228,9 +228,9 @@ configuration = {
             plot_height = 800,
             plot_variables = {
                 {name = "tray_temperature", duration = 8*60*60},
+                {name = "heatmat_state", duration = 8*60*60},
                 {name = "tray_humidity", duration = 8*60*60},
                 {name = "tray_light", duration = 8*60*60},
-                {name = "heatmat_state", duration = 8*60*60},
                 {name = "growlight_state", duration = 8*60*60},
             },
         }
