@@ -39,10 +39,10 @@ $ sudo luarocks install busted
 $ lua gardend.lua <configuration file>
 ```
 
-Propagation configuration:
+Germination configuration:
 
 ```
-$ lua gardend.lua configs/propagation_config.lua
+$ lua gardend.lua configs/germination_config.lua
 ```
 
 ## Issues

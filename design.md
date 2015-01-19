@@ -119,7 +119,7 @@ The `driver` string specifies the driver filename to load. The `variables` array
 
 ``` lua
 configuration = {
-    name = "propagation",
+    name = "germination",
     timestep = 60.0,
     dbfile = "/var/gardend/gardend.db",
     logfile = "/var/gardend/gardend.log",
