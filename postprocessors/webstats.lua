@@ -154,12 +154,19 @@ function webstats:plot(state)
         append(string.format('set title "%s"', self.plot_variables[i].name))
         -- X Axis Range
         append(string.format('set xrange ["%d":"%d"]', xdatas[i][1]-5, xdatas[i][#xdatas[i]]+5))
-        -- Handle boolean values
+        -- Handle yrange and ytics appropriately for boolean versus number values
         if type(state[self.plot_variables[i].name]) == "boolean" then
+            append('unset yrange')
             append('set yrange [-0.5 : 1.5]')
+            append('unset ytics')
             append('set ytics ("false" 0, "true" 1)')
+        else
+            append('unset yrange')
+            append('set yrange [*:*]')
+            append('unset ytics')
+            append('set ytics')
         end
-        -- No key
+        -- Disable key
         append('unset key')
         -- Plot
         append(string.format('plot "/tmp/gardend_plot%d_data" using 1:2 with linespoints', i))
