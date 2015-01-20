@@ -1,5 +1,7 @@
 # gardend
 
+gardend is a discrete-time control daemon for a hydroponic garden.
+
 ## File Structure
 
 * `inputs/`: Input blocks
