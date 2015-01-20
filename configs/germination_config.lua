@@ -49,7 +49,7 @@ configuration = {
             -- State configuration
             variables = {"tray_temperature", "heatmat_hysteresis", "heatmat_state"},
             -- Block-specific configuration
-            temperature_target = 26.0,
+            temperature_target = 25.0,
             temperature_window = 0.5,
         }
     },
