@@ -41,7 +41,7 @@ configuration = {
             variables = {"growlight_state"},
             -- Block-specific configuration
             time_on = {hour = 6, min = 0, sec = 0},
-            time_off = {hour = 20, min = 0, sec = 0},
+            time_off = {hour = 18, min = 0, sec = 0},
         },
         heatmat_controller = {
             -- Driver name
@@ -49,7 +49,7 @@ configuration = {
             -- State configuration
             variables = {"tray_temperature", "heatmat_hysteresis", "heatmat_state"},
             -- Block-specific configuration
-            temperature_target = 25.0,
+            temperature_target = 26.0,
             temperature_window = 0.5,
         }
     },
