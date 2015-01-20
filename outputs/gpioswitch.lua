@@ -27,7 +27,7 @@ function gpioswitch.new(configuration)
 
     -- Open GPIO with initial value
     local dir = {[false] = "low", [true] = "high"}
-    self.gpio = GPIO(configuration.gpio_number, dir[xor(self.initial_value, self.active_low)])
+    self.gpio = GPIO(configuration.gpio_number, dir[xor(configuration.initial_value, self.active_low)])
 
     return self
 end
