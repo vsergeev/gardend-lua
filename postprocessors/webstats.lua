@@ -21,7 +21,7 @@ setmetatable(webstats, {__call = function(self, ...) return self.new(...) end})
 --          },
 --          plot_utc_offset = -8,
 --          plot_width = 600,
---          plot_height = 240,
+--          plot_height = 1000,
 --          plot_variables = {
 --              {name = "tray_temperature", duration = 8*60*60},
 --              {name = "tray_humidity", duration = 8*60*60},
