@@ -2,7 +2,7 @@
 local heatmat = require('controllers.heatmat')
 
 describe("behavior", function ()
-    local heatmat_obj = heatmat{variables = {"temperature", "hysteresis", "output"}, temperature_target=75.0, temperature_window=3.0}
+    local heatmat_obj = heatmat{variables = {"temperature", "hysteresis", "output"}, temperature_target=75.0, temperature_threshold_high=1.5, temperature_threshold_low=3.0}
 
     it("checks hysteresis behavior", function ()
         local state
@@ -24,14 +24,14 @@ describe("behavior", function ()
         assert.are.equal(state.hysteresis, "warming")
         assert.are.equal(state.output, true)
 
-        -- Cross upper threshold, 75.0+3.0=78.0
-        state = {[-1] = {hysteresis = "warming"}, temperature = 79.0}
+        -- Cross upper threshold, 75.0+1.5=76.5
+        state = {[-1] = {hysteresis = "warming"}, temperature = 76.5}
         heatmat_obj:process(state)
         assert.are.equal(state.hysteresis, "cooling")
         assert.are.equal(state.output, false)
 
         -- Cool down to lower threshold
-        state = {[-1] = {hysteresis = "cooling"}, temperature = 78.0}
+        state = {[-1] = {hysteresis = "cooling"}, temperature = 77.0}
         heatmat_obj:process(state)
         assert.are.equal(state.hysteresis, "cooling")
         assert.are.equal(state.output, false)

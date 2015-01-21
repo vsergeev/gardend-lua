@@ -170,7 +170,8 @@ configuration = {
             variables = {"tray_temperature", "heatmat_hysteresis", "heatmat_state"},
             -- Block-specific configuration
             temperature_target = 25.0,
-            temperature_window = 0.5,
+            temperature_threshold_high = 0.25,
+            temperature_threshold_low = 0.5,
         }
     },
     outputs = {

@@ -33,7 +33,8 @@ configuration = {
             driver = "heatmat",
             variables = {"tray_temperature", "heatmat_hysteresis", "heatmat_state"},
             temperature_target = 75.0,
-            temperature_window = 3.0,
+            temperature_threshold_high = 1.5,
+            temperature_threshold_low = 3.0,
         }
     },
     outputs = {
