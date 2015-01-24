@@ -2,9 +2,9 @@
 
 ## Basic Operation
 
-`gardend` is a discrete-time control daemon with a lightweight framework for managing system state and implementing processing blocks. System state is maintained in a flat associative array, mapping variable names to values that may be inputs, intermediate computations, or outputs. Processing blocks are drivers, controllers, and post-processing routines that read sensors, compute output states, drive outputs, compute statistics or generate visualizations, respectively, and may access or populate variables in the system state. All system state is maintained in one time-indexed structure that is stored persistently, so that the daemon may recover from a crash or reboot to resume system control with past state left in-tact.
+`gardend` is a discrete-time control daemon with a lightweight framework for managing system state and implementing processing blocks. System state is maintained in a flat associative array, mapping variable names to values that are inputs, intermediate computations, or outputs. Processing blocks are drivers, controllers, or post-processing routines that read sensors, compute output states, drive outputs, compute statistics or generate visualizations, respectively, and more generally, any routine that accesses or populates variables in current or past system state. System state is recorded to persistent storage at the end of every time step, so that the daemon may recover from a crash or reboot to resume system control with past state left in-tact.
 
-The main job of the daemon is executing processing blocks in four stages on every time step: `inputs`, `controllers`, `outputs`, and `postprocessors`. The `inputs` stage runs all input processing blocks to introduce input variables into the system state for the current time step, from hardware sensors or other data sources. The `controllers` stage runs all controller processing blocks to produce output variables from current and past system state variables. The `outputs` stage runs all output processing blocks to apply output variables to hardware or other external agents. Finally, the `postprocessors` stage runs all post-processing blocks to carry out arbitrary post-processing of the current and past system state variables, such as updating visualizations or statistics. The four categories of processing stages ensure that all input and output dependencies between processing blocks are accounted for during their construction.
+The job of the daemon is simply to execute every processing block, record the system state, and wait until the next time step. The processing blocks are executed in four stages: `inputs`, `controllers`, `outputs`, and `postprocessors`. The `inputs` stage runs all input processing blocks to introduce input variables into the system state for the current time step, from hardware sensors or other data sources. The `controllers` stage runs all controller processing blocks to produce output variables from current input and other past system state variables. The `outputs` stage runs all output processing blocks to apply output variables to hardware or other external agents. Finally, the `postprocessors` stage runs all post-processing blocks to carry out arbitrary post-processing of the current and past system state variables, such as updating visualizations or statistics. The four categories of processing stages ensure that all input and output dependencies between processing blocks are accounted for during their construction.
 
 The daemon runs in a single thread and assumes the time step is relatively long (e.g. 1 minute) compared to the execution time of the processing blocks. The daemon executes every processing block on each time step.
 
@@ -29,7 +29,7 @@ while true do
 
     state:record()
 
-    sleep(remainder of timestep)
+    sleep(remainder of time step)
 end
 ```
 
@@ -75,12 +75,16 @@ state[-2] ->
 
 state[-3] -> {}
 
+state[-4] -> {}
+
+...
+
 state[-500] -> {}
 ```
 
 ## Configuration
 
-The configuration structure for `gardend` specifies the processing blocks to be instantiated in the system, the variable names the processing blocks will look up or populate in the system state, and other block-specific configuration. The configuration is stored as a table with `inputs`, `controllers`, `outputs`, `postprocessors` subtables that contain the configuration of processing blocks belonging to those processing stages.
+The configuration structure for `gardend` specifies the processing blocks to be instantiated in the system, the variable names the processing blocks will look up or populate in the system state, and other block-specific configuration. The configuration is stored as a table with `inputs`, `controllers`, `outputs`, `postprocessors` subtables that contain the configuration of processing block instances belonging to those stages.
 
 Configuration format:
 
