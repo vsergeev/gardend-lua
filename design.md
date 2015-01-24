@@ -29,7 +29,7 @@ while true do
 
     state:record()
 
-    sleep(timestep)
+    sleep(remainder of timestep)
 end
 ```
 
