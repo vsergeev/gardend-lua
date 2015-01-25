@@ -213,6 +213,8 @@ local function read_uptime()
 end
 
 local function time_delta_to_string(delta)
+    local weeks = math.floor(delta/604800.0)
+    delta = delta - weeks*604800
     local days = math.floor(delta/86400.0)
     delta = delta - days*86400
     local hours = math.floor(delta/3600)
@@ -221,7 +223,7 @@ local function time_delta_to_string(delta)
     delta = delta - minutes*60
     local seconds = delta
 
-    return string.format("%d days, %d hours, %d minutes, %d seconds", days, hours, minutes, seconds)
+    return string.format("%d weeks, %d days, %d hours, %d minutes, %d seconds", weeks, days, hours, minutes, seconds)
 end
 
 function webstats:process(state)
