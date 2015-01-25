@@ -41,7 +41,7 @@ configuration = {
             variables = {"growlight_state"},
             -- Block-specific configuration
             time_on = {hour = 6, min = 0, sec = 0},
-            time_off = {hour = 18, min = 0, sec = 0},
+            time_off = {hour = 22, min = 0, sec = 0},
         },
         heatmat_controller = {
             -- Driver name
