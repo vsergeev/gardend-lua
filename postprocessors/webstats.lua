@@ -176,7 +176,9 @@ function webstats:plot(state)
     for i = 1, #self.plot_variables do
         local f = assert(io.open(string.format("/tmp/gardend_plot%d_data", i), "w"))
         for j = 1, #xdatas[i] do
-            f:write(xdatas[i][j] .. "\t" .. ydatas[i][j] .. "\n")
+            if ydatas[i][j] ~= nil then
+                f:write(xdatas[i][j] .. "\t" .. ydatas[i][j] .. "\n")
+            end
         end
         f:close()
     end
