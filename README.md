@@ -53,5 +53,5 @@ Feel free to report any issues, bug reports, or suggestions at [github](https://
 
 ## License
 
-gardend is MIT licensed. See the provided LICENSE file.
+gardend is MIT licensed. See the include [LICENSE](LICENSE) file.
 
