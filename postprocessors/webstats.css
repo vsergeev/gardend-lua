@@ -200,6 +200,10 @@ span.stat-value {
   font-size: 14px;
 }
 
+.post-content p {
+  margin-bottom: 5px;
+}
+
 .post-content ul,
 .post-content ol {
   padding-left: 20px;
