@@ -97,6 +97,7 @@ configuration = {
             -- Block-specific configuration
             wwwdir = '/var/www',
             blogfile = '/var/gardend/microblog.lua',
+            site_url = 'http://theanine.me',
             stats_variables = {
                 {name = "tray_temperature", units = "C", description = "Tray Temperature"},
                 {name = "tray_humidity", units = "%", description = "Tray Humidity"},
