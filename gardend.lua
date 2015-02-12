@@ -47,6 +47,9 @@ end
 local function loadblocks(configuration)
     local blkobjects = {}
 
+    -- Allow loading foo/bar/init.lua with foo.bar
+    package.path = package.path .. ";./?/init.lua"
+
     for _, blktype in ipairs({"inputs", "controllers", "outputs", "postprocessors"}) do
         if configuration[blktype] == nil then
             error("Invalid configuration: missing '" .. blktype .. "' subtable.")
