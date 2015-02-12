@@ -47,8 +47,8 @@
     <div class="section">
         <header class="section-title">Microblog</header>
         <div class="blog">
-            {% for _, entry in ipairs(blog) do %}
-            <div class="post">
+            {% for i, entry in ipairs(blog) do %}
+            <div class="post" id="blog-{* #blog - i + 1 *}">
                 <div class="post-header">
                     <span class="post-title">{{entry.title}}</span><span class="post-date">{{entry.date}}</span>
                 </div>
