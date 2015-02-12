@@ -54,7 +54,7 @@ configuration = {
         webstats = {
             driver = "webstats",
             wwwdir = "./misc",
-            blogfile = "postprocessors/webstats-microblog.lua.example",
+            blogfile = "postprocessors/webstats/microblog.lua.example",
             stats_variables = {
                 {name = "tray_temperature", units = "C", description = "Tray Temperature"},
                 {name = "tray_humidity", units = "%", description = "Tray Humidity"},
