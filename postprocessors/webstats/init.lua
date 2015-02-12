@@ -48,6 +48,8 @@ function webstats.new(configuration)
         error("missing wwwdir in configuration")
     elseif configuration.blogfile == nil then
         error("missing blogfile in configuration")
+    elseif configuration.site_url == nil then
+        error("missing site_url in configuration")
     elseif configuration.stats_variables == nil then
         error("missing stats_variables in configuration")
     elseif configuration.plot_utc_offset == nil then
@@ -62,16 +64,12 @@ function webstats.new(configuration)
 
     self.template = require("resty.template")
     self.template.caching(false)
-    self.template.print = function (s)
-        local f = assert(io.open(self.wwwdir .. "/index.html", 'w'))
-        f:write(s)
-        f:close()
-    end
 
     self.wwwdir = configuration.wwwdir
     self.templatefile = debug.getinfo(1, "S").source:sub(2):gsub("init.lua","webstats.html")
-    print(self.templatefile)
+    self.rsstemplatefile = debug.getinfo(1, "S").source:sub(2):gsub("init.lua","microblog.xml")
     self.blogfile = configuration.blogfile
+    self.site_url = configuration.site_url
     self.stats_variables = configuration.stats_variables
     self.plot_utc_seconds_offset = configuration.plot_utc_offset*60*60
     self.plot_width = configuration.plot_width
@@ -230,6 +228,14 @@ local function time_delta_to_string(delta)
     return string.format("%d weeks, %d days, %d hours, %d minutes, %d seconds", weeks, days, hours, minutes, seconds)
 end
 
+function webstats:template_print(filename)
+    return function (s)
+        local f = assert(io.open(self.wwwdir .. "/" .. filename, 'w'))
+        f:write(s)
+        f:close()
+    end
+end
+
 function webstats:process(state)
     -- Load blog
     local blog = loadblog(self.blogfile)
@@ -250,7 +256,12 @@ function webstats:process(state)
     }
 
     -- Render template
+    self.template.print = self:template_print("index.html")
     self.template.render(self.templatefile, {blog = blog, stats_variables = self.stats_variables, plot_variables = self.plot_variables, sysinfo_variables = sysinfo_variables, state = state})
+
+    -- Render RSS microblog
+    self.template.print = self:template_print("microblog.xml")
+    self.template.render(self.rsstemplatefile, {blog = blog, site_url = self.site_url})
 end
 
 return webstats

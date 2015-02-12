@@ -168,6 +168,11 @@ span.stat-value {
 /* Blog */
 /******************************************************************************/
 
+.blog-rss a {
+  font-size: 16px;
+  vertical-align: middle;
+}
+
 .blog {
   margin-top: 15px;
   margin-bottom: -5px;

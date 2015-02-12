@@ -45,7 +45,7 @@
     </div>
 
     <div class="section">
-        <header class="section-title">Microblog</header>
+        <header class="section-title">Microblog <span class="blog-rss"><a href="microblog.xml">(rss)</a></span></header>
         <div class="blog">
             {% for i, entry in ipairs(blog) do %}
             <div class="post" id="blog-{* #blog - i + 1 *}">
