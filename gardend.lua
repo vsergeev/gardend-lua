@@ -2,7 +2,7 @@ local state = require('state')
 local periphery = require('periphery')
 
 -- Version constant
-GARDEND_VERSION = "1.0.0"
+GARDEND_VERSION = "1.0.1"
 
 -- Usage
 if #arg < 1 then
