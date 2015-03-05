@@ -50,7 +50,7 @@
             {% for i, entry in ipairs(blog) do %}
             <div class="post" id="blog-{* #blog - i + 1 *}">
                 <div class="post-header">
-                    <span class="post-title">{{entry.title}}</span><span class="post-date">{{entry.date}}</span>
+                    <a href="#blog-{* #blog - i + 1 *}"><span class="post-title">{{entry.title}}</span></a><span class="post-date">{{entry.date}}</span>
                 </div>
                 <div class="post-content">
                     {*entry.content*}
