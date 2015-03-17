@@ -1,8 +1,25 @@
 # gardend design
 
+## Introduction
+
+gardend is a hydroponics control daemon that collects data from inputs like temperature and humidity sensors, and drives outputs like grow lights, heat mat, or water pump. The daemon was written in Lua and runs in userspace on embedded Linux.
+
+gardend was designed to solve a few specific problems:
+
+* Modular and scalable inputs/outputs
+    * How should the system accommodate a new sensor? A second sensor of an existing kind?
+    * How can a controller (e.g. heat mat, timer) be changed? How is it coupled to sensors and outputs?
+* Robustness
+    * How does the system store state?
+    * How will the system resume operation after reboot or power loss?
+* Data-rich
+    * How can the system post-process current and past data?
+* Configuration
+    * How can the system be configured easily?
+
 ## Basic Operation
 
-`gardend` is a discrete-time control daemon with a lightweight framework for managing system state and implementing processing blocks. System state is maintained in a flat associative array, mapping variable names to values that are inputs, intermediate computations, or outputs. Processing blocks are drivers, controllers, or post-processing routines that read sensors, compute output states, drive outputs, compute statistics or generate visualizations, respectively, and more generally, any routine that accesses or populates variables in current or past system state. System state is recorded to persistent storage at the end of every time step, so that the daemon may recover from a crash or reboot to resume system control with past state left in-tact.
+`gardend` is a modular, discrete-time control daemon with a lightweight framework for managing system state and implementing processing blocks. System state is maintained in a flat associative array, mapping variable names to values that are inputs, intermediate computations, or outputs. Processing blocks are drivers, controllers, or post-processing routines that read sensors, compute output states, drive outputs, compute statistics or generate visualizations, respectively, and more generally, any routine that accesses or populates variables in current or past system state. System state is recorded to persistent storage at the end of every time step, so that the daemon may recover from a crash or reboot to resume system control with past state left in-tact.
 
 The job of the daemon is simply to execute every processing block, record the system state, and wait until the next time step. The processing blocks are executed in four stages: `inputs`, `controllers`, `outputs`, and `postprocessors`. The `inputs` stage runs all input processing blocks to introduce input variables into the system state for the current time step, from hardware sensors or other data sources. The `controllers` stage runs all controller processing blocks to produce output variables from current input and other past system state variables. The `outputs` stage runs all output processing blocks to apply output variables to hardware or other external agents. Finally, the `postprocessors` stage runs all post-processing blocks to carry out arbitrary post-processing of the current and past system state variables, such as updating visualizations or statistics. The four categories of processing stages ensure that all input and output dependencies between processing blocks are accounted for during their construction.
 

@@ -1,6 +1,10 @@
 # gardend
 
-gardend is a discrete-time control daemon for a hydroponic garden.
+gardend is a modular, discrete-time control daemon for a hydroponic garden.
+
+## Design
+
+See the [design document](design.md).
 
 ## File Structure
 
@@ -15,10 +19,6 @@ gardend is a discrete-time control daemon for a hydroponic garden.
 * `design.md`: design document
 * `LICENSE`: MIT license
 * `README.md`: this README
-
-## Design
-
-See the [design document](design.md).
 
 ## Dependencies
 
