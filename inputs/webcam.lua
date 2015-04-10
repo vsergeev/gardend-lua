@@ -48,9 +48,12 @@ function webcam:process(state)
     assert(os.execute("/usr/bin/convert -font Liberation-Mono -pointsize 12 -fill white -undercolor '#00000080' -gravity SouthEast -annotate +0+-2 '" .. os.date("%c", state.timestamp) .. "' /tmp/gardend-webcam-lo.jpg /tmp/gardend-webcam-lo.jpg"))
 
     local filename = string.format("webcam-%d.jpg", state.timestamp)
+    local folder = os.date("%Y-%m-%d", state.timestamp)
 
+    -- Create year-month-day folder if it doesn't already exist
+    assert(os.execute("mkdir -p " .. self.archivedir .. "/" .. folder))
     -- Copy high-res image to archive directory
-    assert(os.execute("cp /tmp/gardend-webcam-hi.jpg " .. self.archivedir .. "/" .. filename))
+    assert(os.execute("cp /tmp/gardend-webcam-hi.jpg " .. self.archivedir .. "/" .. folder .. "/" .. filename))
     -- Copy low-res image to www dir
     assert(os.execute("mv /tmp/gardend-webcam-lo.jpg " .. self.wwwdir .. "/webcam.jpg"))
 
