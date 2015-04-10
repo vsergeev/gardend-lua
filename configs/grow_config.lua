@@ -43,6 +43,15 @@ configuration = {
             time_on = {hour = 6, min = 0, sec = 0},
             time_off = {hour = 22, min = 0, sec = 0},
         },
+        waterpump_timer = {
+            -- Driver name
+            driver = "timer",
+            -- State configuration
+            variables = {"waterpump_state"},
+            -- Block-specific configuration
+            time_on = {hour = 5, min = 0, sec = 0},
+            time_off = {hour = 5, min = 1, sec = 0},
+        },
         heatmat_controller = {
             -- Driver name
             driver = "heatmat",
@@ -65,16 +74,27 @@ configuration = {
             active_low = false,
             initial_value = false,
         },
-        heatmat_switch = {
+        waterpump_switch = {
             -- Driver name
-            driver = "gpioswitch",
+            driver = "gpiopulse",
             -- State configuration
-            variables = {"heatmat_state"},
+            variables = {"waterpump_state"},
             -- Block-specific configuration
             gpio_number = 26,
             active_low = false,
             initial_value = false,
+            duration = 10,
         },
+        --heatmat_switch = {
+        --    -- Driver name
+        --    driver = "gpioswitch",
+        --    -- State configuration
+        --    variables = {"heatmat_state"},
+        --    -- Block-specific configuration
+        --    gpio_number = 26,
+        --    active_low = false,
+        --    initial_value = false,
+        --},
     },
     postprocessors = {
         textstats = {
@@ -88,6 +108,7 @@ configuration = {
                 {name = "heatmat_hysteresis", units = ""},
                 {name = "heatmat_state", units = "(on/off)"},
                 {name = "growlight_state", units = "(on/off)"},
+                {name = "waterpump_state", units = "(on/off)"},
             },
             file = nil,
         },
@@ -104,6 +125,7 @@ configuration = {
                 --{name = "tray_light", units = "lux", description = "Tray Light"},
                 {name = "heatmat_state", units = "(on/off)", description = "Heatmat State"},
                 {name = "growlight_state", units = "(on/off)", description = "Growlight State"},
+                {name = "waterpump_state", units = "(on/off)", description = "Water Pump State"},
             },
             plot_utc_offset = -8,
             plot_width = 600,
@@ -114,6 +136,7 @@ configuration = {
                 {name = "tray_humidity", duration = 8*60*60},
                 --{name = "tray_light", duration = 8*60*60},
                 {name = "growlight_state", duration = 8*60*60},
+                {name = "waterpump_state", duration = 8*60*60},
             },
         }
     },
