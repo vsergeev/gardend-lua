@@ -127,7 +127,7 @@ configuration = {
                 {name = "growlight_state", units = "(on/off)", description = "Growlight State"},
                 {name = "waterpump_state", units = "(on/off)", description = "Water Pump State"},
             },
-            plot_utc_offset = -8,
+            plot_utc_offset = -7,
             plot_width = 600,
             plot_height = 800,
             plot_variables = {
