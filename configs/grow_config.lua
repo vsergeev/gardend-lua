@@ -49,8 +49,8 @@ configuration = {
             -- State configuration
             variables = {"waterpump_state"},
             -- Block-specific configuration
-            time_on = {hour = 5, min = 0, sec = 0},
-            time_off = {hour = 5, min = 1, sec = 0},
+            time_on = {hour = 5, min = 15, sec = 0},
+            time_off = {hour = 5, min = 16, sec = 0},
         },
         heatmat_controller = {
             -- Driver name
@@ -83,7 +83,7 @@ configuration = {
             gpio_number = 26,
             active_low = false,
             initial_value = false,
-            duration = 10,
+            duration = 20,
         },
         --heatmat_switch = {
         --    -- Driver name
