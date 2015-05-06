@@ -83,7 +83,7 @@ configuration = {
             gpio_number = 26,
             active_low = false,
             initial_value = false,
-            duration = 20,
+            duration = 30,
         },
         --heatmat_switch = {
         --    -- Driver name
