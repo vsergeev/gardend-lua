@@ -38,7 +38,11 @@ function heatmat:process(state)
     local temperature = state[self.temperature_variable]
     local hysteresis = state[-1][self.hysteresis_variable] or "warming"
 
-    if hysteresis == "warming" and temperature < (self.target + self.threshold_high) then
+    if temperature == nil then
+        log("heatmat: warning: temperature variable unavailable, disabling heatmat")
+        state[self.heatmat_variable] = false
+        state[self.hysteresis_variable] = hysteresis
+    elseif hysteresis == "warming" and temperature < (self.target + self.threshold_high) then
         state[self.heatmat_variable] = true
         state[self.hysteresis_variable] = "warming"
     elseif hysteresis == "warming" then
