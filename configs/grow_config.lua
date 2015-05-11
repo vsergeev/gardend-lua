@@ -58,7 +58,7 @@ configuration = {
             -- State configuration
             variables = {"tray_temperature", "heatmat_hysteresis", "heatmat_state"},
             -- Block-specific configuration
-            temperature_target = 20.0,
+            temperature_target = 15.5,
             temperature_threshold_high = 0.25,
             temperature_threshold_low = 0.5,
         }
@@ -85,16 +85,16 @@ configuration = {
             initial_value = false,
             duration = 22,
         },
-        --heatmat_switch = {
-        --    -- Driver name
-        --    driver = "gpioswitch",
-        --    -- State configuration
-        --    variables = {"heatmat_state"},
-        --    -- Block-specific configuration
-        --    gpio_number = 26,
-        --    active_low = false,
-        --    initial_value = false,
-        --},
+        heatmat_switch = {
+            -- Driver name
+            driver = "gpioswitch",
+            -- State configuration
+            variables = {"heatmat_state"},
+            -- Block-specific configuration
+            gpio_number = 65,
+            active_low = false,
+            initial_value = false,
+        },
     },
     postprocessors = {
         textstats = {
